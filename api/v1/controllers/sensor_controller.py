@@ -20,3 +20,7 @@ class SensorController(ControllerBase):
     def partial_update(self, sensor_id : str):
         pass
     
+    @route.delete("/{sensor_id}")
+    def destroy(self, sensor_id : str):
+        pass
+    
