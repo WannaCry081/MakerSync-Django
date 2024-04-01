@@ -21,8 +21,8 @@ class SensorRequestSchema(BaseModel):
 
 
 class SensorResponseSchema(BaseModel):
-    is_start : bool
-    is_stop : bool
-    is_initialized : bool
-    counter : int
-    timer : int
+    is_start: bool = Field(default=False)
+    is_stop: bool = Field(default=False)
+    is_initialized: bool = Field(default=False)
+    counter: int = Field(default=0)
+    timer: int = Field(default=0)
