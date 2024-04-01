@@ -7,4 +7,8 @@ class SensorRequestSchema(BaseModel):
 
 
 class SensorResponseSchema(BaseModel):
-    pass
+    is_start : bool
+    is_stop : bool
+    is_initialized : bool
+    counter : int
+    timer : int
