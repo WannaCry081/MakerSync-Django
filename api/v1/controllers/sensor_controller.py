@@ -7,7 +7,10 @@ class SensorController(ControllerBase):
     
     @route.post("/")
     def create(self, sensor_request : SensorRequestSchema):
-        pass
+        try:
+            pass
+        except Exception as e:
+            print(e)
     
     @route.get("/{sensor_id}")
     def retrieve(self, sensor_id : str):
