@@ -12,4 +12,7 @@ class SensorController(ControllerBase):
     def retrieve(self, sensor_id : str):
         pass
     
+    @route.put("/{sensor_id}")        
+    def update(self, sensor_id : str):
+        pass
     
