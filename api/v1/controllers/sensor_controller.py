@@ -16,3 +16,7 @@ class SensorController(ControllerBase):
     def update(self, sensor_id : str):
         pass
     
+    @route.patch("/{sensor_id}")
+    def partial_update(self, sensor_id : str):
+        pass
+    
