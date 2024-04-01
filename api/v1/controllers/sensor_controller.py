@@ -8,4 +8,8 @@ class SensorController(ControllerBase):
     def create(self):
         pass
     
+    @route.get("/{sensor_id}")
+    def retrieve(self, sensor_id : str):
+        pass
+    
     
