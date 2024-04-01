@@ -1,7 +1,8 @@
-from firebase_admin import firestore
+from api.v1.schemas import SensorRequestSchema
+from api.v1.utils import firebase_firestore
 
 
-db=firestore.client()
+db=firebase_firestore()
 
 
 class SensorRepository:
