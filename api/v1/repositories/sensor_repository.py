@@ -17,3 +17,9 @@ class SensorRepository:
             "timer" : sensor_request.timer
         })
         return True
+    
+    
+    @staticmethod
+    def is_sensor_exists(sensor_id : str):
+        collection=db.collection(sensor_id).get()
+        return len(collection) == 0
