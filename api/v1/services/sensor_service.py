@@ -13,10 +13,10 @@ class SensorService:
                 detail="Duplicate instance of sensor exists."
             )
         
-        if SensorRepository.create_sensor(sensor_id, sensor_request):
-            return SensorResponseSchema(**sensor_request.dict())
+        if not SensorRepository.create_sensor(sensor_id, sensor_request):
+            raise ServerErrorException()
         
-        raise ServerErrorException()
+        return SensorResponseSchema(**sensor_request.dict())
     
     
     @staticmethod
