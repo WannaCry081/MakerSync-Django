@@ -22,15 +22,15 @@ class SensorService:
     @staticmethod
     def retrieve(sensor_id : str):
         
-        if not SensorRepository.is_sensor_exists(sensor_id):
-            raise BadRequestException(
-                detail="Duplicate instance of sensor exists."
+        if SensorRepository.is_sensor_exists(sensor_id):
+            raise NotFoundException(
+                detail="Sensor not found."
             )
         
         sensor=SensorRepository.get_sensor(sensor_id)
         if not sensor:
-            raise NotFoundException(
-                detail="Sensor not found."
+            raise BadRequestException(
+                detail="Invalid Sensor ID"
             )
     
         return SensorResponseSchema(**sensor.dict())
