@@ -55,10 +55,32 @@ class SensorController(ControllerBase):
             )
             
     
-    @route.put("/{sensor_id}")        
+    @route.put("/{sensor_id}", response={
+        200 : SensorResponseSchema,
+        400 : ErrorResponseSchema,
+        404 : ErrorResponseSchema,
+        500 : ErrorResponseSchema
+    })        
     def update(self, sensor_id : str, 
                sensor_request : SensorRequestSchema):
-        pass
+        try:
+            response=SensorService.update(sensor_id, sensor_request)
+            return 200, response
+        except BadRequestException as e:
+            return 400, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except Exception as e:
+            return 500, ErrorResponseSchema(
+                status=500,
+                detail="Internal Server Error"
+            )
 
     
     @route.delete("/{sensor_id}")
