@@ -32,3 +32,8 @@ class SensorRepository:
         if sensor.exists:
             return sensor.to_dict()
         return None
+    
+    
+    @staticmethod
+    def delete_sensor(sensor_id : str):
+        pass
