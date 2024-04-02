@@ -33,4 +33,4 @@ class SensorService:
                 detail="Sensor not found."
             )
     
-        return sensor
+        return SensorResponseSchema(**sensor.dict())
