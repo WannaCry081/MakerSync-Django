@@ -28,4 +28,7 @@ class SensorRepository:
     
     @staticmethod
     def get_sensor(sensor_id : str):
-        pass
+        sensor=db.collection(sensor_id).document("sensors").get()
+        if sensor.exists:
+            return sensor.to_dict()
+        return None
