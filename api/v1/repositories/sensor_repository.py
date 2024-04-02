@@ -24,3 +24,8 @@ class SensorRepository:
     def is_sensor_exists(sensor_id : str):
         collection=db.collection(sensor_id).get()
         return len(collection) == 0
+    
+    
+    @staticmethod
+    def get_sensor(sensor_id : str):
+        pass
