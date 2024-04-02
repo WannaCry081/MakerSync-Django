@@ -33,7 +33,7 @@ class SensorService:
                 detail="Invalid Sensor ID"
             )
     
-        return SensorResponseSchema(**sensor.dict())
+        return SensorResponseSchema(**sensor)
     
     
     @staticmethod
