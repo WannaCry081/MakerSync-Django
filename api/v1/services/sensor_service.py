@@ -61,7 +61,8 @@ class SensorService:
                 detail="Sensor not found."
             )
         
-        if SensorRepository.delete_sensor(sensor_id):
-            return True
+        if not SensorRepository.delete_sensor(sensor_id):
+            raise ServerErrorException()
+        
+        return True
     
-        raise ServerErrorException()
