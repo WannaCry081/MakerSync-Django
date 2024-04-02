@@ -37,6 +37,23 @@ class SensorService:
     
     
     @staticmethod
+    def update(sensor_id : str, sensor_request : SensorRequestSchema): 
+        
+        if SensorRepository.is_sensor_exists(sensor_id):
+            raise NotFoundException(
+                detail="Sensor not found."
+            )
+            
+        sensor=SensorRepository.update_sensor(sensor_id, sensor_request)
+        if not sensor: 
+            raise BadRequestException(
+                detail="Invalid Sensor ID"
+            )
+       
+        return SensorResponseSchema(**sensor_request.dict())
+            
+    
+    @staticmethod
     def destroy(sensor_id : str):
         
         if SensorRepository.is_sensor_exists(sensor_id):
