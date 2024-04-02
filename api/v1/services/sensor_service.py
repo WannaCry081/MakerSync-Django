@@ -17,3 +17,8 @@ class SensorService:
             return SensorResponseSchema(**sensor_request.dict())
         
         raise ServerErrorException()
+    
+    
+    @staticmethod
+    def retrieve(sensor_id : str):
+        pass
