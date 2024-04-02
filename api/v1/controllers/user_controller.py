@@ -8,3 +8,10 @@ class UserController(ControllerBase):
     def list(self, sensor_id : str):
         pass
     
+    
+    @route.post("/{sensor_id}")
+    def create(self, sensor_id : str):
+        pass 
+    
+    
+    
