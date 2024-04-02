@@ -28,7 +28,12 @@ class SensorController(ControllerBase):
             )
             
     
-    @route.get("/{sensor_id}")
+    @route.get("/{sensor_id}", response={
+        200 : SensorResponseSchema,
+        400 : ErrorResponseSchema,
+        404 : ErrorResponseSchema,
+        500 : ErrorResponseSchema
+    })
     def retrieve(self, sensor_id : str):
         try:
             response=SensorService.retrieve(sensor_id)
