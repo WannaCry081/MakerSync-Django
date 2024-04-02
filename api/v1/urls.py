@@ -4,7 +4,7 @@ from ninja_extra import NinjaExtraAPI
 from api.v1.controllers import *
 
 
-api=NinjaExtraAPI()
+api=NinjaExtraAPI(version="1.0.0")
 api.register_controllers(
     SensorController
 )
