@@ -1,6 +1,6 @@
 from api.v1.schemas import SensorRequestSchema, SensorResponseSchema
 from api.v1.repositories import SensorRepository
-from api.v1.exceptions import BadRequestException, ServerErrorException
+from api.v1.exceptions import BadRequestException, ServerErrorException, NotFoundException
 
 
 class SensorService:
@@ -21,4 +21,16 @@ class SensorService:
     
     @staticmethod
     def retrieve(sensor_id : str):
-        pass
+        
+        if not SensorRepository.is_sensor_exists:
+            raise BadRequestException(
+                detail="Duplicate instance of sensor exists."
+            )
+        
+        sensor=SensorRepository.get_sensor(sensor_id)
+        if not sensor:
+            raise NotFoundException(
+                detail="Sensor not found."
+            )
+    
+        return sensor
