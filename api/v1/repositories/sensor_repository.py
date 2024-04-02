@@ -36,4 +36,10 @@ class SensorRepository:
     
     @staticmethod
     def delete_sensor(sensor_id : str):
-        pass
+        collection=db.collection(sensor_id)
+        
+        for document in collection.stream():
+            document.reference.delete()
+            
+        db.collection(sensor_id).delete()
+        return True 
