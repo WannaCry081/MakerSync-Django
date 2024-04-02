@@ -63,5 +63,16 @@ class SensorController(ControllerBase):
     
     @route.delete("/{sensor_id}")
     def destroy(self, sensor_id : str):
-        pass
-    
+        try:
+            if SensorService.destroy(sensor_id):
+                return 200, {}
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except ServerErrorException as e:
+            return 500, ErrorResponseSchema(
+                status=e.status, 
+                detail=e.detail
+            )
