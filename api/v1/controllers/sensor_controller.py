@@ -29,7 +29,25 @@ class SensorController(ControllerBase):
     
     @route.get("/{sensor_id}")
     def retrieve(self, sensor_id : str):
-        pass
+        try:
+            response=SensorService.retrieve(sensor_id)
+            return 200, response
+        except BadRequestException as e:
+            return 400, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except Exception as e:
+            return 500, ErrorResponseSchema(
+                status=500,
+                detail="Internal Server Error"
+            )
+            
     
     @route.put("/{sensor_id}")        
     def update(self, sensor_id : str, 
