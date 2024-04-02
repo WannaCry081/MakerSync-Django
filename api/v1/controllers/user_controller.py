@@ -14,4 +14,9 @@ class UserController(ControllerBase):
         pass 
     
     
+    @route.get("/{sensor_id}/{user_email}")
+    def retrieve(self, sensor_id : str, user_email : str):
+        pass
     
+    
+   
