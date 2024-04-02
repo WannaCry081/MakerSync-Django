@@ -8,7 +8,7 @@ class SensorService:
     @staticmethod
     def create(sensor_id : str, sensor_request : SensorRequestSchema):
         
-        if not SensorRepository.is_sensor_exists:
+        if not SensorRepository.is_sensor_exists(sensor_id):
             raise BadRequestException(
                 detail="Duplicate instance of sensor exists."
             )
@@ -22,7 +22,7 @@ class SensorService:
     @staticmethod
     def retrieve(sensor_id : str):
         
-        if not SensorRepository.is_sensor_exists:
+        if not SensorRepository.is_sensor_exists(sensor_id):
             raise BadRequestException(
                 detail="Duplicate instance of sensor exists."
             )
@@ -38,4 +38,13 @@ class SensorService:
     
     @staticmethod
     def destroy(sensor_id : str):
-        pass
+        
+        if SensorRepository.is_sensor_exists(sensor_id):
+            raise NotFoundException(
+                detail="Sensor not found."
+            )
+        
+        if SensorRepository.delete_sensor(sensor_id):
+            return True
+    
+        raise ServerErrorException()
