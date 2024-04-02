@@ -24,4 +24,6 @@ class UserController(ControllerBase):
         pass
     
     
-    
+    @route.delete("/{sensor_id}/{user_email}")
+    def destroy(self, sensor_id : str, user_email : str):
+        pass
