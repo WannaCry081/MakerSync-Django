@@ -19,4 +19,9 @@ class UserController(ControllerBase):
         pass
     
     
-   
+    @route.put("/{sensor_id}/{user_email}")
+    def update(self, sensor_id : str, user_email : str):
+        pass
+    
+    
+    
