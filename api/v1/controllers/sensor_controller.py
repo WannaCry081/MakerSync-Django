@@ -1,7 +1,7 @@
 from ninja_extra import route, api_controller, ControllerBase
 from api.v1.schemas import SensorRequestSchema, SensorResponseSchema, ErrorResponseSchema
 from api.v1.services.sensor_service import SensorService
-from api.v1.exceptions import BadRequestException, ServerErrorException
+from api.v1.exceptions import BadRequestException, ServerErrorException, NotFoundException
 
 
 @api_controller("/sensor")
@@ -14,18 +14,19 @@ class SensorController(ControllerBase):
     })
     def create(self, sensor_id : str, sensor_request : SensorRequestSchema):
         try:
-            response=SensorResponseSchema(**sensor_request.dict())
+            response=SensorService.create(sensor_id, sensor_request)
             return 201, response
         except BadRequestException as e:
             return 404, ErrorResponseSchema(
-                status=e.status_code, 
+                status=e.status, 
                 detail=e.detail
             )
         except ServerErrorException as e:
             return 500, ErrorResponseSchema(
-                status=e.status_code, 
+                status=e.status, 
                 detail=e.detail
             )
+            
     
     @route.get("/{sensor_id}")
     def retrieve(self, sensor_id : str):
