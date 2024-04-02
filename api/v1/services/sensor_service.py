@@ -34,3 +34,8 @@ class SensorService:
             )
     
         return SensorResponseSchema(**sensor.dict())
+    
+    
+    @staticmethod
+    def destroy(sensor_id : str):
+        pass
