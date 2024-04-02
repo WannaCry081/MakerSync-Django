@@ -6,6 +6,7 @@ from api.v1.controllers import *
 
 api=NinjaExtraAPI(version="1.0.0")
 api.register_controllers(
+    UserController,
     SensorController
 )
 
