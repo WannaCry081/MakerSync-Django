@@ -37,7 +37,7 @@ class SensorRepository:
     @staticmethod
     def update_sensor(sensor_id : str, sensor_request : SensorRequestSchema):
         sensor=db.collection(sensor_id).document("sensors")
-        sensor.update(sensor_request)
+        sensor.update(sensor_request.dict())
         return True
     
     
@@ -47,6 +47,5 @@ class SensorRepository:
         
         for document in collection.stream():
             document.reference.delete()
-            
-        db.collection(sensor_id).delete()
+    
         return True 
