@@ -35,6 +35,13 @@ class SensorRepository:
     
     
     @staticmethod
+    def update_sensor(sensor_id : str, sensor_request : SensorRequestSchema):
+        sensor=db.collection(sensor_id).document("sensors")
+        sensor.update(sensor_request)
+        return True
+    
+    
+    @staticmethod
     def delete_sensor(sensor_id : str):
         collection=db.collection(sensor_id)
         
