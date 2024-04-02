@@ -54,11 +54,7 @@ class SensorController(ControllerBase):
     def update(self, sensor_id : str, 
                sensor_request : SensorRequestSchema):
         pass
-    
-    @route.patch("/{sensor_id}")
-    def partial_update(self, sensor_id : str, 
-                       sensor_request : SensorRequestSchema):
-        pass
+
     
     @route.delete("/{sensor_id}")
     def destroy(self, sensor_id : str):
