@@ -4,8 +4,15 @@ from api.v1.exceptions import BadRequestException, NotFoundException, ServerErro
 class UserService:
     
     @staticmethod    
-    def list(self, sensor_id : str):
-        pass
+    def list(sensor_id : str):
+
+        users=UserRepository.get_users(sensor_id)
+        if not users:
+            raise BadRequestException(
+                detail="Invalid request."
+            )
+        
+        return users
     
     
     @staticmethod    
@@ -24,15 +31,49 @@ class UserService:
     
     
     @staticmethod    
-    def retrieve(self, sensor_id : str, user_email : str):
-        pass
+    def retrieve(sensor_id : str, email : str):
+        
+        if not UserRepository.is_user_exists(sensor_id, email):
+            raise NotFoundException(
+                detail="User does not exist."
+            )
+        
+        user=UserRepository.get_user(sensor_id, email)
+        if not user:
+            raise BadRequestException(
+                detail="Invalid user email."
+            )
+        
+        return UserResponseSchema(**user)
+
     
     
     @staticmethod    
-    def update(self, sensor_id : str, user_email : str):
-        pass
+    def update(sensor_id : str, email: str, user_request : UserRequestSchema):
+        
+        if not UserRepository.get_user(sensor_id, email):
+            raise NotFoundException(
+                detail="User not found."
+            )
+        
+        user=UserRepository.update_user(sensor_id, email, user_request)
+        if not user:
+            raise BadRequestException(
+                detail="Invalid request."
+            )
+        
+        return UserResponseSchema(**user_request.dict())
     
     
     @staticmethod    
-    def destroy(self, sensor_id : str, user_email : str):
-        pass
+    def destroy(sensor_id : str, email : str):
+        
+        if not UserRepository.get_user(sensor_id, email):
+            raise NotFoundException(
+                detail="User not found."
+            )
+        
+        if not UserRepository.delete_user(sensor_id, email):
+            raise ServerErrorException()
+        
+        return True

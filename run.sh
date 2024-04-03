@@ -10,6 +10,7 @@ else
     echo "Creating virtual environment"
     virtualenv "$VENV_PATH"
     source "$VENV_PATH/Scripts/activate"
+    python -m pip install -r "$(pwd)/requirements.txt"
     pip install django django-ninja-extra
 fi
 
