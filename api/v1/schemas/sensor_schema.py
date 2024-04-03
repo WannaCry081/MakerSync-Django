@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 class SensorRequestSchema(BaseModel):
     is_start : bool=Field(
-        Title="Is Start", 
+        Title="Is Start",
     )
     is_stop : bool=Field(
         Title="Is Stop", 
@@ -16,6 +16,9 @@ class SensorRequestSchema(BaseModel):
     )
     timer : int=Field(
         Title="Timer", 
+    )
+    temperature : float=Field(
+        Title="Temperature"
     )
 
 
