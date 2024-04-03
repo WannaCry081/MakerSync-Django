@@ -29,7 +29,7 @@ class UserController(ControllerBase):
         except ServerErrorException as e:
             return 500, ErrorResponseSchema(
                 status=e.status,
-                detail=e.detail
+                detail="Internal Server Error"
             )
         
     
