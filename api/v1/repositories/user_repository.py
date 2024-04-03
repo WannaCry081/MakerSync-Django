@@ -15,5 +15,9 @@ class UserRepository:
     def is_user_exists(sensor_id: str):
         pass
     
-   
+    @staticmethod
+    def get_user(sensor_id: str):
+        pass
+    
+    
     
