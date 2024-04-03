@@ -95,6 +95,22 @@ class UserController(ControllerBase):
             )
     
     
-    @route.delete("/{sensor_id}/{email}")
+    @route.delete("/{sensor_id}/{email}", response={
+        204: dict,
+        404: ErrorResponseSchema,
+        500: ErrorResponseSchema
+    })
     def destroy(self, sensor_id : str, email : str):
-        pass
+        try: 
+            response=UserService.destroy(sensor_id, email)
+            return 204, {"detail" : "User successfully deleted."}
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except ServerErrorException as e:
+            return 500, ErrorResponseSchema(
+                status=e.status,
+                detail="Internal Server Error"
+            )
