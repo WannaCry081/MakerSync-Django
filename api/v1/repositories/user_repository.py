@@ -9,7 +9,13 @@ class UserRepository:
     
     @staticmethod
     def create_user(sensor_id: str, user_request: UserRequestSchema):
-       pass
+       doc=db.collection(sensor_id).document(user_request.email)
+       doc.set({
+           "name" : user_request.name,
+           "email" : user_request.email,
+           "is_active" : user_request.is_active,
+           "is_connected" : user_request.is_connected
+       })
    
     @staticmethod
     def is_user_exists(sensor_id: str):
@@ -17,6 +23,10 @@ class UserRepository:
     
     @staticmethod
     def get_user(sensor_id: str):
+        pass
+    
+    @staticmethod
+    def get_users(sensor_id: str):
         pass
     
     @staticmethod
