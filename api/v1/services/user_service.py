@@ -56,8 +56,20 @@ class UserService:
     
     
     @staticmethod    
-    def update(sensor_id : str, email : str):
-        pass
+    def update(sensor_id : str, user_request : UserRequestSchema):
+        
+        if not UserRepository.get_user(sensor_id, user_request.email):
+            raise NotFoundException(
+                detail="User not found."
+            )
+        
+        user=UserRepository.update_user(sensor_id, user_request.email)
+        if not user:
+            raise BadRequestException(
+                detail="Invalid request."
+            )
+        
+        return UserResponseSchema(**user_request.dict())
     
     
     @staticmethod    
