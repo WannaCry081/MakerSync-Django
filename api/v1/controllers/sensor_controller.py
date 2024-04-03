@@ -17,7 +17,7 @@ class SensorController(ControllerBase):
             response=SensorService.create(sensor_id, sensor_request)
             return 201, response
         except BadRequestException as e:
-            return 404, ErrorResponseSchema(
+            return 400, ErrorResponseSchema(
                 status=e.status, 
                 detail=e.detail
             )
