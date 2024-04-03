@@ -11,7 +11,8 @@ class UserService:
     @staticmethod    
     def create(sensor_id : str, user_request: UserRequestSchema):
         
-        if not UserRepository.is_user_exists(sensor_id, user_request.email):
+        email=user_request.email
+        if UserRepository.is_user_exists(sensor_id, email):
             raise BadRequestException(
                 detail="User already exists."
             )
