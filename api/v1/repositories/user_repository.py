@@ -24,8 +24,11 @@ class UserRepository:
         return user_doc.exists
         
     @staticmethod
-    def get_user(sensor_id: str):
-        pass
+    def get_user(sensor_id: str, email: str):
+        user=db.collection(sensor_id).document(email).get()
+        if user.exists:
+            return user.to_dict()
+        return None
     
     @staticmethod
     def get_users(sensor_id: str):
