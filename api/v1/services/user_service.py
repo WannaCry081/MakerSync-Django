@@ -74,4 +74,13 @@ class UserService:
     
     @staticmethod    
     def destroy(sensor_id : str, email : str):
-        pass
+        
+        if not UserRepository.get_user(sensor_id, email):
+            raise NotFoundException(
+                detail="User not found."
+            )
+        
+        if not UserRepository.delete_user(sensor_id, email):
+            raise ServerErrorException()
+        
+        return True
