@@ -19,7 +19,7 @@ class UserController(ControllerBase):
     })
     def create(self, sensor_id : str, user_request: UserRequestSchema):
         try:
-            response = UserService.create(sensor_id, user_request)
+            response=UserService.create(sensor_id, user_request)
             return 201, response
         except BadRequestException as e:
             return 400, ErrorResponseSchema(
@@ -34,16 +34,39 @@ class UserController(ControllerBase):
         
     
     
-    @route.get("/{sensor_id}/{user_email}")
-    def retrieve(self, sensor_id : str, user_email : str):
+    @route.get("/{sensor_id}/{email}", response={
+        200: UserResponseSchema,
+        400: ErrorResponseSchema,
+        404: ErrorResponseSchema,
+        500: ErrorResponseSchema
+    })
+    def retrieve(self, sensor_id : str, email : str):
+        try: 
+            response=UserService.retrieve(sensor_id, email)
+            return 200, response
+        except BadRequestException as e:
+            return 400, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except ServerErrorException as e:
+            return 500, ErrorResponseSchema(
+                status=e.status,
+                detail="Internal Server Error"
+            )
+        
+    
+    
+    @route.put("/{sensor_id}/{email}")
+    def update(self, sensor_id : str, email : str):
         pass
     
     
-    @route.put("/{sensor_id}/{user_email}")
-    def update(self, sensor_id : str, user_email : str):
-        pass
-    
-    
-    @route.delete("/{sensor_id}/{user_email}")
-    def destroy(self, sensor_id : str, user_email : str):
+    @route.delete("/{sensor_id}/{email}")
+    def destroy(self, sensor_id : str, email : str):
         pass
