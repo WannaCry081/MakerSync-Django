@@ -4,7 +4,7 @@ from api.v1.exceptions import BadRequestException, NotFoundException, ServerErro
 class UserService:
     
     @staticmethod    
-    def list(self, sensor_id : str):
+    def list(sensor_id : str):
         pass
     
     
@@ -24,15 +24,28 @@ class UserService:
     
     
     @staticmethod    
-    def retrieve(self, sensor_id : str, user_email : str):
+    def retrieve(sensor_id : str, email : str):
+        
+        if not UserRepository.is_user_exists(sensor_id, email):
+            return NotFoundException(
+                detail="User does not exist."
+            )
+        
+        user=UserRepository.get_user(sensor_id, email)
+        if not user:
+            return BadRequestException(
+                detail="Invalid user email."
+            )
+        
+        return UserResponseSchema(**user)
+
+    
+    
+    @staticmethod    
+    def update(sensor_id : str, email : str):
         pass
     
     
     @staticmethod    
-    def update(self, sensor_id : str, user_email : str):
-        pass
-    
-    
-    @staticmethod    
-    def destroy(self, sensor_id : str, user_email : str):
+    def destroy(sensor_id : str, email : str):
         pass
