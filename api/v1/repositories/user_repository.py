@@ -52,7 +52,9 @@ class UserRepository:
         return True
     
     @staticmethod 
-    def delete_user(sensor_id: str):
-        pass
+    def delete_user(sensor_id: str, email):
+        user=db.collection(sensor_id).document(email)
+        user.delete()
+        return True
     
     
