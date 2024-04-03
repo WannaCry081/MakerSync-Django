@@ -19,7 +19,7 @@ class UserController(ControllerBase):
     })
     def create(self, sensor_id : str, user_request: UserRequestSchema):
         try:
-            response = UserService.create_user(sensor_id, user_request)
+            response = UserService.create(sensor_id, user_request)
             return 201, response
         except BadRequestException as e:
             return 400, ErrorResponseSchema(
@@ -27,7 +27,7 @@ class UserController(ControllerBase):
                 detail=e.detail
             )
         except ServerErrorException as e:
-            return 400, ErrorResponseSchema(
+            return 500, ErrorResponseSchema(
                 status=e.status,
                 detail=e.detail
             )
