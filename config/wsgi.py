@@ -10,6 +10,13 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+value = "config.settings.local"
+environment = os.environ.get("DJANGO_ENV")
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.local')
 

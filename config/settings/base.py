@@ -1,9 +1,13 @@
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = 'django-insecure-)v6bfki3h5lqm(_%96uf@z^9!8a=^m&4!j4vr2r3z*^4!lp-a2'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
