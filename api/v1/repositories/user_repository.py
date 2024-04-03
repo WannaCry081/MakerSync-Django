@@ -1,6 +1,6 @@
 from api.v1.schemas import UserRequestSchema
 from api.v1.utils import firebase_firestore
-
+from typing import List 
 
 db=firebase_firestore()
 
@@ -33,15 +33,23 @@ class UserRepository:
     @staticmethod
     def get_users(sensor_id: str):
         users=[]
-        docs=db.collection(sensor_id).stream()
-        for doc in docs:
-            if doc.id != "sensors":
-                users.append(doc.to_dict())
+
+        try:
+            docs=db.collection(sensor_id).stream()
+            for doc in docs:
+                if doc.id != "sensors":
+                    users.append(doc.to_dict())
+        
+        except Exception as e:
+            print("Error:", e)
+
         return users
     
     @staticmethod
     def update_user(sensor_id: str, user_request: UserRequestSchema):
-        pass
+        user=db.collection(sensor_id).document(user_request.email).get()
+        user.update(user_request.dict())
+        return True
     
     @staticmethod 
     def delete_user(sensor_id: str):
