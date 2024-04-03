@@ -32,7 +32,12 @@ class UserRepository:
     
     @staticmethod
     def get_users(sensor_id: str):
-        pass
+        users=[]
+        docs=db.collection(sensor_id).stream()
+        for doc in docs:
+            if doc.id != "sensors":
+                users.append(doc.to_dict())
+        return users
     
     @staticmethod
     def update_user(sensor_id: str, user_request: UserRequestSchema):
