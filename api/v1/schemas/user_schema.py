@@ -21,7 +21,7 @@ class UserRequestSchema(BaseModel):
 
 
 class UserResponseSchema(BaseModel):
-    name : str
-    email : str
-    is_active : bool
-    is_connected : bool
+    name : str=Field(default="")
+    email : str=Field(default="")
+    is_active : bool=Field(default=False)
+    is_connected : bool=Field(default=False)
