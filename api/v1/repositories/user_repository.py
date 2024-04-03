@@ -46,8 +46,8 @@ class UserRepository:
         return users
     
     @staticmethod
-    def update_user(sensor_id: str, user_request: UserRequestSchema):
-        user=db.collection(sensor_id).document(user_request.email).get()
+    def update_user(sensor_id: str, email: str, user_request: UserRequestSchema):
+        user=db.collection(sensor_id).document(email)
         user.update(user_request.dict())
         return True
     
