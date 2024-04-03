@@ -18,6 +18,10 @@ load_dotenv()
 value = "config.settings.local"
 environment = os.environ.get("DJANGO_ENV")
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.local')
+if environment.lower() != "development":
+    value = "config.settings.production"
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', value)
 
 application = get_wsgi_application()
+app = application
