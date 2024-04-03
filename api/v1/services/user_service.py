@@ -56,14 +56,14 @@ class UserService:
     
     
     @staticmethod    
-    def update(sensor_id : str, user_request : UserRequestSchema):
+    def update(sensor_id : str, email: str, user_request : UserRequestSchema):
         
-        if not UserRepository.get_user(sensor_id, user_request.email):
+        if not UserRepository.get_user(sensor_id, email):
             raise NotFoundException(
                 detail="User not found."
             )
         
-        user=UserRepository.update_user(sensor_id, user_request.email)
+        user=UserRepository.update_user(sensor_id, email, user_request)
         if not user:
             raise BadRequestException(
                 detail="Invalid request."
