@@ -19,5 +19,8 @@ class UserRepository:
     def get_user(sensor_id: str):
         pass
     
+    @staticmethod
+    def update_user(sensor_id: str, user_request: UserRequestSchema):
+        pass
     
-    
+  
