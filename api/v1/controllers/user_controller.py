@@ -2,20 +2,35 @@ from ninja_extra import ControllerBase, api_controller, route
 from api.v1.schemas import UserRequestSchema, UserResponseSchema, ErrorResponseSchema
 from api.v1.services import UserService
 from api.v1.exceptions import BadRequestException, NotFoundException, ServerErrorException
+from typing import List
 
 
 @api_controller("/users")
 class UserController(ControllerBase):
     
     @route.get("/{sensor_id}", response={
-        200: UserResponseSchema,
+        200: List[UserResponseSchema],
         404: ErrorResponseSchema,
         500: ErrorResponseSchema,
 
     })
     def list(self, sensor_id : str):
-        pass
+        try:
+            response=UserService.list(sensor_id)
+            return 200, response
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except ServerErrorException as e:
+            return 500, ErrorResponseSchema(
+                status=e.status,
+                detail="Internal Server Error"
+            )
     
+
+
     @route.post("/{sensor_id}", response={
         201: UserResponseSchema,
         400: ErrorResponseSchema,
