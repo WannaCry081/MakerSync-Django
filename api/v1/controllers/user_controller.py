@@ -7,10 +7,14 @@ from api.v1.exceptions import BadRequestException, NotFoundException, ServerErro
 @api_controller("/users")
 class UserController(ControllerBase):
     
-    @route.get("/{sensor_id}")
+    @route.get("/{sensor_id}", response={
+        200: UserResponseSchema,
+        404: ErrorResponseSchema,
+        500: ErrorResponseSchema,
+
+    })
     def list(self, sensor_id : str):
         pass
-    
     
     @route.post("/{sensor_id}", response={
         201: UserResponseSchema,
@@ -62,9 +66,33 @@ class UserController(ControllerBase):
         
     
     
-    @route.put("/{sensor_id}/{email}")
-    def update(self, sensor_id : str, email : str):
-        pass
+    @route.put("/{sensor_id}/{email}", response={
+        200: UserResponseSchema,
+        400: ErrorResponseSchema,
+        404: ErrorResponseSchema,
+        500: ErrorResponseSchema
+    })
+    def update(self, sensor_id : str, 
+               email: str,
+               user_request : UserRequestSchema):
+        try: 
+            response=UserService.update(sensor_id, email, user_request)
+            return 200, response
+        except BadRequestException as e:
+            return 400, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except NotFoundException as e:
+            return 404, ErrorResponseSchema(
+                status=e.status,
+                detail=e.detail
+            )
+        except ServerErrorException as e:
+            return 500, ErrorResponseSchema(
+                status=e.status,
+                detail="Internal Server Error"
+            )
     
     
     @route.delete("/{sensor_id}/{email}")
