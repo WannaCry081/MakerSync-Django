@@ -5,7 +5,21 @@ class UserService:
     
     @staticmethod    
     def list(sensor_id : str):
-        pass
+
+        users_data=UserRepository.get_users(sensor_id)
+        if not users_data:
+            raise NotFoundException(
+                detail="No users found."
+            )
+        try:
+            users = {idx: dict(user_data) for idx, user_data in enumerate(users_data, start=1)}
+            print(users)
+        except Exception as e:
+            print("Error during instantiation:", e)
+
+        # users=[UserResponseSchema(**user_data) for user_data in users_data]
+        
+        return users
     
     
     @staticmethod    
@@ -27,13 +41,13 @@ class UserService:
     def retrieve(sensor_id : str, email : str):
         
         if not UserRepository.is_user_exists(sensor_id, email):
-            return NotFoundException(
+            raise NotFoundException(
                 detail="User does not exist."
             )
         
         user=UserRepository.get_user(sensor_id, email)
         if not user:
-            return BadRequestException(
+            raise BadRequestException(
                 detail="Invalid user email."
             )
         
