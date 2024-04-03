@@ -34,16 +34,10 @@ class UserRepository:
     def get_users(sensor_id: str):
         users=[]
 
-        try:
-            docs=db.collection(sensor_id).stream()
-            for doc in docs:
-                if doc.id != "sensors":
-                    users.append(doc.to_dict())
-        
-        except Exception as e:
-            print("Error:", e)
-
+        docs=db.collection(sensor_id).stream()
+        users = [doc.to_dict() for doc in docs if doc.id != "sensors"]
         return users
+
     
     @staticmethod
     def update_user(sensor_id: str, email: str, user_request: UserRequestSchema):
