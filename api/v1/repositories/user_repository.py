@@ -16,10 +16,11 @@ class UserRepository:
            "is_active" : user_request.is_active,
            "is_connected" : user_request.is_connected
        })
+       return True  
    
     @staticmethod
-    def is_user_exists(sensor_id: str, user_request: UserRequestSchema):
-        user_doc=db.collection(sensor_id).document(user_request.email).get()
+    def is_user_exists(sensor_id: str, email : str):
+        user_doc=db.collection(sensor_id).document(email).get()
         return user_doc.exists
         
     @staticmethod
