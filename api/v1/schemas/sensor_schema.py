@@ -29,3 +29,4 @@ class SensorResponseSchema(BaseModel):
     is_initialized: bool = Field(default=False)
     counter: int = Field(default=0)
     timer: int = Field(default=0)
+    temperature: float=Field(default=0)
