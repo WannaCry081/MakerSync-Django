@@ -18,9 +18,10 @@ class UserRepository:
        })
    
     @staticmethod
-    def is_user_exists(sensor_id: str):
-        pass
-    
+    def is_user_exists(sensor_id: str, user_request: UserRequestSchema):
+        user_doc=db.collection(sensor_id).document(user_request.email).get()
+        return user_doc.exists
+        
     @staticmethod
     def get_user(sensor_id: str):
         pass
