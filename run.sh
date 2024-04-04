@@ -20,7 +20,10 @@ if [ "$1" = "lib" ]; then
     if [ -f "$DEPENDENCIES_PATH" ]; then 
         python -m pip install -r "$DEPENDENCIES_PATH"
     else
-        pip install django django-ninja-extra firebase-admin python-dotenv
+        pip install django django-ninja-extra 
+        pip install firebase-admin python-dotenv 
+        pip install django-cors-headers
+
     fi
     
     echo "Running server..."
