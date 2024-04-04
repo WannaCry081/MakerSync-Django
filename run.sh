@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 VENV_PATH="$(pwd)/venv"
-
+DEPENDENCIES_PATH="$(pwd)/requirements.txt"
 
 if [ -d "$VENV_PATH" ]; then 
     echo "Activating virtual environment"
@@ -10,7 +10,13 @@ else
     echo "Creating virtual environment"
     virtualenv "$VENV_PATH"
     source "$VENV_PATH/Scripts/activate"
-    python -m pip install -r "$(pwd)/requirements.txt"
+
+    if [ -d "$DEPENDENCIES_PATH" ]; then 
+        python -m pip install -r "$(pwd)/requirements.txt"
+    else
+        pip install django django-ninja-extra firebase-admin python-dotenv
+    fi
+    
     pip install django django-ninja-extra
 fi
 
