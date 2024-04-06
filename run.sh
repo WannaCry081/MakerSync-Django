@@ -6,6 +6,16 @@ PIPENV_PATH="$(pwd)/Pipfile"
 DEPENDENCIES_PATH="$(pwd)/requirements.txt"
 
 
+install_dependencies() {
+    if [ -f "$DEPENDENCIES_PATH" ]; then 
+        `$1` install -r "$DEPENDENCIES_PATH"
+    else 
+        `$1` install django django-ninja-extra
+        `$1` install firebase-admin python-dotenv
+    fi
+}
+
+
 if [ "$1" = "lib" ]; then 
 
     if [ -d "$VENV_PATH" ]; then 
