@@ -15,8 +15,10 @@ if environment.lower() != "development":
     docs = Redoc()
     
 api = NinjaExtraAPI(
-    version="1.0.0", 
-    docs=docs
+    title = "MakerSyncAPI",
+    description = "A Semi-automation PETG Material to 3D Printing Filament Application Programming Interface that establish a connection to the ESP32 and Firebase for a seamless interaction between our Mobile Application developed in Flutter.",
+    version = "1.0.0", 
+    docs = docs
 )
 
 api.register_controllers(
