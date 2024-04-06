@@ -18,6 +18,7 @@ install_dependencies() {
     else 
         `$1` install django django-ninja-extra
         `$1` install firebase-admin python-dotenv
+        `$1` install flake8
     fi
 }
 
