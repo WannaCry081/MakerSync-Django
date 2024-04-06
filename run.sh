@@ -19,7 +19,6 @@ install_dependencies() {
         $1 install python-dotenv
         $1 install django django-ninja-extra
         $1 install firebase-admin
-        $1 install flake8
     fi
 }
 
@@ -30,7 +29,7 @@ run_server() {
 }
 
 
-if [ "$1" = "lib" ]; then 
+if [ "$#" -eq 0 ] || [ "$1" = "venv" ]; then 
     echo "Activating virtual environment"
 
     if [ ! -d "$VENV_PATH" ]; then 
@@ -49,7 +48,10 @@ if [ "$1" = "lib" ]; then
 
     # Running django local server 
     run_server deactivate
-else
+fi
+
+
+if [ "$1" = "pipenv" ]
     # Initializing pip virtual environment
     pipenv shell
 
