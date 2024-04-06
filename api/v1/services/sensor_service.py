@@ -10,7 +10,7 @@ class SensorService:
         
         if not SensorRepository.is_sensor_exists(sensor_id):
             raise BadRequestException(
-                detail="Duplicate instance of sensor exists."
+                detail="Sensors already exists."
             )
         
         if not SensorRepository.create_sensor(sensor_id, sensor_request):

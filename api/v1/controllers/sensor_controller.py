@@ -91,7 +91,7 @@ class SensorController(ControllerBase):
     def destroy(self, sensor_id : str):
         try:
             if SensorService.destroy(sensor_id):
-                return 204, {"detail" : "Successfully Remove Collection"}
+                return 204, {"detail" : "Successfully delete collection"}
         except NotFoundException as e:
             return 404, ErrorResponseSchema(
                 status=e.status,
