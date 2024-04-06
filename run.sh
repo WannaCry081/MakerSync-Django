@@ -1,12 +1,18 @@
 #!/usr/bin/bash
 
 
+# Python virtual environment 
 VENV_PATH="$(pwd)/venv"
+
+# Pip virtual environment
 PIPENV_PATH="$(pwd)/Pipfile.lock"
+
+# List of dependencies
 DEPENDENCIES_PATH="$(pwd)/requirements.txt"
 
 
 install_dependencies() {
+    # Check if requirements.txt exists
     if [ -f "$DEPENDENCIES_PATH" ]; then 
         `$1` install -r "$DEPENDENCIES_PATH"
     else 
@@ -18,32 +24,37 @@ install_dependencies() {
 run_server() {
     echo "Running Server..."
     python manage.py runserver
+    `$1`
 }
-
 
 
 if [ "$1" = "lib" ]; then 
 
-    echo "Activating virtual environment"
-
     if [ ! -d "$VENV_PATH" ]; then 
+        # Creating the python virtual environment 
         virtualenv "$VENV_PATH"
+
+        # Installing the python dependencies
         install_dependencies pip
     fi
     
+    echo "Activating virtual environment"
+
+    # Activating python virtual environment
     source "$VENV_PATH/Scripts/activate"
 
-    run_server 
-    deactivate
-
+    # Running django local server 
+    run_server deactivate
 else
 
+    # Initializing pip virtual environment
     pipenv shell
 
     if [ ! -f "$PIPENV_PATH" ]; then 
+        # Installing the python dependencies
         install_dependencies pipenv
     fi
 
-    run_server
-    exit
+    # Running django local server 
+    run_server exit
 fi 
