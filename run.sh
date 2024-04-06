@@ -2,7 +2,7 @@
 
 
 VENV_PATH="$(pwd)/venv"
-PIPENV_PATH="$(pwd)/Pipfile"
+PIPENV_PATH="$(pwd)/Pipfile.lock"
 DEPENDENCIES_PATH="$(pwd)/requirements.txt"
 
 
@@ -24,37 +24,26 @@ run_server() {
 
 if [ "$1" = "lib" ]; then 
 
-    if [ -d "$VENV_PATH" ]; then 
-        echo "Activating virtual environment"
-        source "$VENV_PATH/Scripts/activate"
-    else
-        echo "Creating virtual environment"
-        virtualenv "$VENV_PATH"
-        source "$VENV_PATH/Scripts/activate"
-    fi
-    
-    if [ -f "$DEPENDENCIES_PATH" ]; then 
-        python -m pip install -r "$DEPENDENCIES_PATH"
-    else
-        pip install django django-ninja-extra 
-        pip install firebase-admin python-dotenv 
-        pip install django-cors-headers
+    echo "Activating virtual environment"
 
+    if [ ! -d "$VENV_PATH" ]; then 
+        virtualenv "$VENV_PATH"
+        install_dependencies pip
     fi
     
-    echo "Running server..."
-    python manage.py runserver
+    source "$VENV_PATH/Scripts/activate"
+
+    run_server 
     deactivate
 
 else
 
-    if [ -f "$PIPENV_PATH" ]; then 
-        pipenv shell
-    else
-        pipenv install -r "$DEPENDENCIES_PATH"
+    pipenv shell
+
+    if [ ! -f "$PIPENV_PATH" ]; then 
+        install_dependencies pipenv
     fi
 
-    echo "Running server..."
-    python manage.py runserver
+    run_server
     exit
 fi 
