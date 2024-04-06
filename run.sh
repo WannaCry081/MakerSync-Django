@@ -15,6 +15,12 @@ install_dependencies() {
     fi
 }
 
+run_server() {
+    echo "Running Server..."
+    python manage.py runserver
+}
+
+
 
 if [ "$1" = "lib" ]; then 
 
