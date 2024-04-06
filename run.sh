@@ -48,10 +48,8 @@ if [ "$#" -eq 0 ] || [ "$1" = "venv" ]; then
 
     # Running django local server 
     run_server deactivate
-fi
 
-
-if [ "$1" = "pipenv" ]
+elif [ "$1" = "pipenv" ]; then 
     # Initializing pip virtual environment
     pipenv shell
 
