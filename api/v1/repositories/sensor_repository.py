@@ -8,15 +8,15 @@ db=firebase_firestore()
 class SensorRepository:
     
     @staticmethod
-    def create_sensor(sensor_id : str, sensor_request : SensorRequestSchema):
+    def create_sensor(sensor_id : str):
         doc=db.collection(sensor_id).document("sensors")
         doc.set({
-            "is_start" : sensor_request.is_start,
-            "is_stop" : sensor_request.is_stop,
-            "is_initialized" : sensor_request.is_initialized,
-            "counter" : sensor_request.counter,
-            "timer" : sensor_request.timer,
-            "temperature" : sensor_request.temperature
+            "is_start" : False,
+            "is_stop" : False,
+            "is_initialized" : False,
+            "counter" : 0,
+            "timer" : 0,
+            "temperature" : 0
         })
         return True
     

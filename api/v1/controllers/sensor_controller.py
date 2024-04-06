@@ -18,19 +18,18 @@ class SensorController(ControllerBase):
                     400 : ErrorResponseSchema,
                     500 : ErrorResponseSchema
                 })
-    def create(self, sensor_id : str, sensor_request : SensorRequestSchema):
+    def create(self, sensor_id : str):
         """
         Endpoint to create a new sensor.
         
         Args:
             sensor_id (str): The ID of the sensor.
-            sensor_request (SensorRequestSchema): The request data for creating the sensor.
-        
+
         Returns:
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.create(sensor_id, sensor_request)
+            response = SensorService.create(sensor_id)
             return 201, response
         except BadRequestException as e:
             return 400, ErrorResponseSchema(

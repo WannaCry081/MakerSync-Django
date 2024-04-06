@@ -6,17 +6,17 @@ from api.v1.exceptions import BadRequestException, ServerErrorException, NotFoun
 class SensorService:
     
     @staticmethod
-    def create(sensor_id : str, sensor_request : SensorRequestSchema):
+    def create(sensor_id : str):
         
         if not SensorRepository.is_sensor_exists(sensor_id):
             raise BadRequestException(
                 detail="Sensors already exists."
             )
         
-        if not SensorRepository.create_sensor(sensor_id, sensor_request):
+        if not SensorRepository.create_sensor(sensor_id):
             raise ServerErrorException()
         
-        return SensorResponseSchema(**sensor_request.dict())
+        return SensorResponseSchema()
     
     
     @staticmethod
