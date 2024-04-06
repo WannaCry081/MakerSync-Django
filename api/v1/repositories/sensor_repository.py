@@ -15,7 +15,8 @@ class SensorRepository:
             "is_stop" : sensor_request.is_stop,
             "is_initialized" : sensor_request.is_initialized,
             "counter" : sensor_request.counter,
-            "timer" : sensor_request.timer
+            "timer" : sensor_request.timer,
+            "temperature" : sensor_request.temperature
         })
         return True
     
