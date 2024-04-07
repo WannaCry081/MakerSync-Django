@@ -8,8 +8,8 @@ db=firebase_firestore()
 class SensorRepository:
     
     @staticmethod
-    def get_sensor():
-        pass
+    def get_sensors():
+        return [ collection for collection in db.collections()]
         
     
     @staticmethod
