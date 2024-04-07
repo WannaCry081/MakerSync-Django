@@ -10,8 +10,20 @@ class SensorController(ControllerBase):
     Controller handling operations related to sensors.
     """
     
-    @route.get("/")
+    @route.get("/",
+               summary = "Retrieve a list of sensors.",
+               description = "Retrieve a list of active collections of sensors.",
+               response = {
+                   200 : list,
+                   500 : ErrorResponseSchema
+               })
     def list(self):
+        """
+        Endpoint to retrieve details of a sensor.
+        
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
             response = SensorService.list()
             return 200, response
