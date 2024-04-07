@@ -13,8 +13,7 @@ class UserRepository:
        doc.set({
            "name" : user_request.name,
            "email" : user_request.email,
-           "is_active" : user_request.is_active,
-           "is_connected" : user_request.is_connected
+           "is_connect" : user_request.is_connect
        })
        return True  
    

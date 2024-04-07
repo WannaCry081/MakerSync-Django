@@ -10,8 +10,8 @@ class UserRequestSchema(BaseModel):
         Title="Email",
         default=""
     )
-    is_connected : bool=Field(
-        Title="Is Connected",
+    is_connect : bool=Field(
+        Title="Is Connect",
         default=False
     )
 
@@ -19,4 +19,4 @@ class UserRequestSchema(BaseModel):
 class UserResponseSchema(BaseModel):
     name : str=Field(default="")
     email : str=Field(default="")
-    is_connected : bool=Field(default=False)
+    is_connect : bool=Field(default=False)
