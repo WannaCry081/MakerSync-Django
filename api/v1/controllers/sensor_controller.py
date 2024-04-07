@@ -13,9 +13,13 @@ class SensorController(ControllerBase):
     @route.get("/")
     def list(self):
         try:
-            pass    
-        except:
-            pass
+            response = SensorService.list()
+            return 200, response
+        except Exception as e:
+            return 500, ErrorResponseSchema(
+                status=500,
+                detail="Internal Server Error"
+            )
         
 
     @route.post("/{sensor_id}", 
