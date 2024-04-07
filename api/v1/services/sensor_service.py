@@ -7,7 +7,7 @@ class SensorService:
     
     @staticmethod
     def list():
-        pass
+        return SensorRepository.get_sensors()
     
     
     @staticmethod
