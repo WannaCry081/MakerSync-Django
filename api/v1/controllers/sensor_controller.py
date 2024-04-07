@@ -9,6 +9,14 @@ class SensorController(ControllerBase):
     """
     Controller handling operations related to sensors.
     """
+    
+    @route.get("/")
+    def list(self):
+        try:
+            pass    
+        except:
+            pass
+        
 
     @route.post("/{sensor_id}", 
                 summary = "Create a new sensor", 
