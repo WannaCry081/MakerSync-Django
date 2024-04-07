@@ -9,7 +9,7 @@ class SensorRepository:
     
     @staticmethod
     def get_sensors():
-        return [ collection for collection in db.collections()]
+        return [str(collection.id) for collection in db.collections()]
         
     
     @staticmethod
