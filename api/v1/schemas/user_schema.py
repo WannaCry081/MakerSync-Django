@@ -10,10 +10,6 @@ class UserRequestSchema(BaseModel):
         Title="Email",
         default=""
     )
-    is_connect : bool=Field(
-        Title="Is Connect",
-        default=True
-    )
 
 
 class UserResponseSchema(BaseModel):
