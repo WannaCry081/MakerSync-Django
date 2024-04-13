@@ -12,8 +12,7 @@ class UserRepository:
        doc=db.collection(sensor_id).document(user_request.email)
        doc.set({
            "name" : user_request.name,
-           "email" : user_request.email,
-           "is_connect" : user_request.is_connect
+           "email" : user_request.email
        })
        return True  
    
