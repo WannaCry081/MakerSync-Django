@@ -17,8 +17,8 @@ class SensorRequestSchema(BaseModel):
         Title="Is Stop", 
         default=False
     )
-    is_initialized : bool=Field(
-        Title="Is Initialized", 
+    is_initialize : bool=Field(
+        Title="Is Initialize", 
         default=False
     )
     counter : int=Field(
@@ -38,7 +38,7 @@ class SensorRequestSchema(BaseModel):
 class SensorResponseSchema(BaseModel):
     is_start: bool = Field(default=False)
     is_stop: bool = Field(default=False)
-    is_initialized: bool = Field(default=False)
+    is_initialize: bool = Field(default=False)
     counter: int = Field(default=0)
     timer: int = Field(default=0)
     temperature: float=Field(default=0)
