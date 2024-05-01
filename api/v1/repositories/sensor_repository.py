@@ -8,11 +8,6 @@ db=firebase_firestore()
 class SensorRepository:
     
     @staticmethod
-    def get_sensors():
-        return [str(collection.id) for collection in db.collections()]
-        
-    
-    @staticmethod
     def create_sensor(sensor_id : str):
         doc=db.collection(sensor_id).document("sensors")
         doc.set({
