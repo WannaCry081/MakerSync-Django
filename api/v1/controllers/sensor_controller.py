@@ -1,7 +1,12 @@
-from ninja_extra import route, api_controller, ControllerBase
-from api.v1.schemas import SensorRequestSchema, SensorResponseSchema, ErrorResponseSchema
+from ninja_extra import (
+    route, api_controller, ControllerBase)
+from api.v1.schemas import (
+    SensorRequestSchema, SensorResponseSchema, 
+    CreateSensorRequestSchema, ErrorResponseSchema)
+from api.v1.exceptions import (
+    BadRequestException, ServerErrorException, 
+    NotFoundException)
 from api.v1.services.sensor_service import SensorService
-from api.v1.exceptions import BadRequestException, ServerErrorException, NotFoundException
 
 
 @api_controller("/sensors")
@@ -10,7 +15,7 @@ class SensorController(ControllerBase):
     Controller handling operations related to sensors.
     """
 
-    @route.post("/{sensor_id}", 
+    @route.post("/", 
                 summary = "Create a new sensor", 
                 description = "Create a new sensor with the provided ID.",
                 response={
@@ -18,18 +23,18 @@ class SensorController(ControllerBase):
                     400 : ErrorResponseSchema,
                     500 : ErrorResponseSchema
                 })
-    def create(self, sensor_id : str):
+    def create(self, sensor_request : CreateSensorRequestSchema):
         """
         Endpoint to create a new sensor.
         
         Args:
-            sensor_id (str): The ID of the sensor.
+            sensor_request (CreateSensorRequestSchema): The request data for adding the record of the machine in the database.
 
         Returns:
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.create(sensor_id)
+            response = SensorService.create(sensor_request)
             return 201, response
         except BadRequestException as e:
             return 400, ErrorResponseSchema(
