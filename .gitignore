@@ -1,6 +1,7 @@
-.env
-/venv
+*.env
+*.sqlite3
 **/__pycache__
+**/venv
 serviceAccountKey.json
 Pipfile
 Pipfile.lock
