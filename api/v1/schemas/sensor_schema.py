@@ -1,6 +1,13 @@
 from pydantic import BaseModel, Field
 
 
+class CreateSensorRequestSchema(BaseModel):
+    code : str = Field(
+        Title = "Code",
+        default = ""
+    )
+    
+
 class SensorRequestSchema(BaseModel):
     is_start : bool=Field(
         Title="Is Start",
@@ -26,7 +33,6 @@ class SensorRequestSchema(BaseModel):
         Title="Temperature",
         default=0
     )
-
 
 
 class SensorResponseSchema(BaseModel):
