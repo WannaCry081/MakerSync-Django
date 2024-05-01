@@ -24,9 +24,8 @@ You can access the MakerSync API endpoints through the provided documentation. S
 
 ### Sensors
 
-- **GET** `/api/v1/sensors/`: Retrieve information about all registered machines.
-- **POST** `/api/v1/sensors/{sensor_id}`: Add a new machine to the database identified by its sensor ID.
 - **GET** `/api/v1/sensors/{sensor_id}`: Retrieve sensor information for a specific machine based on its sensor ID.
+- **POST** `/api/v1/sensors`: Add a new machine to the database identified by its sensor ID.
 - **PUT** `/api/v1/sensors/{sensor_id}`: Update all information related to a specific machine based on its sensor ID.
 - **DELETE** `/api/v1/sensors/{sensor_id}`: Delete a machine from the database based on its sensor ID.
 
