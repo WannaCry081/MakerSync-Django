@@ -1,19 +1,24 @@
-from api.v1.schemas import SensorRequestSchema, SensorResponseSchema
+from api.v1.schemas import (
+    SensorRequestSchema, SensorResponseSchema, 
+    CreateSensorRequestSchema)
+from api.v1.exceptions import (
+    BadRequestException, ServerErrorException, 
+    NotFoundException)
 from api.v1.repositories import SensorRepository
-from api.v1.exceptions import BadRequestException, ServerErrorException, NotFoundException
 
 
 class SensorService:
     
     @staticmethod
-    def create(sensor_id : str):
+    def create(sensor_request : CreateSensorRequestSchema):
         
-        if not SensorRepository.is_sensor_exists(sensor_id):
+        code : str = sensor_request.code
+        if not SensorRepository.is_sensor_exists(code):
             raise BadRequestException(
                 detail="Sensors already exists."
             )
         
-        if not SensorRepository.create_sensor(sensor_id):
+        if not SensorRepository.create_sensor(code):
             raise ServerErrorException()
         
         return SensorResponseSchema()
