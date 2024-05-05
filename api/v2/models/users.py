@@ -9,7 +9,7 @@ class User(AbstractUser):
     last_name = None
     
     email = models.EmailField(unique = True, blank = False, null = False)
-
+    machine = models.ForeignKey("Machine", on_delete = models.CASCADE, blank = False)
     USERNAME_FIELD = "email"
     
     

@@ -11,6 +11,8 @@ class Sensor(models.Model):
     time = models.IntegerField(default = 0)
     temperature = models.FloatField(default = 0.0)
     
+    machine = models.ForeignKey("Machine", on_delete = models.CASCADE, blank = False)
+    
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     
