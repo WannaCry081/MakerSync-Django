@@ -10,7 +10,7 @@ from api.v2.schemas import ErrorSchema
 @api_controller("/machines")
 class MachineController(ControllerBase):
     
-    @route("/")
+    @route.post("/")
     def create(self, request : MachineSchema):  
         try:
             response = MachineService.create(request)
