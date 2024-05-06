@@ -4,5 +4,7 @@ from pydantic import (
 
 class UserSchema(BaseModel):
     
-    username : str = Field(..., title = "Username")
-    email : EmailStr = Field(..., title = "Email")
+    username : str = Field(
+        ..., title = "Username", default = "")
+    email : EmailStr = Field(
+        ..., title = "Email", default = "")
