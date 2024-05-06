@@ -21,3 +21,9 @@ class UserController(ControllerBase):
     def create(self, code : MachineSchema, 
                request : UserSchema):
         pass
+    
+    
+    @route.put("/{email}")
+    def update(self, code : MachineSchema, 
+               email : str, request : UserSchema):
+        pass
