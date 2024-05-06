@@ -14,9 +14,19 @@ class NotificationSchema(BaseModel):
     
     
     @validator("title")
-    def validate_title(cls, value):
+    def validate_title(cls, value : str):
         
         if len(value) <= 2:
             raise ValueError("Invalid notification title.")
+        
+        return value
+    
+    
+    @validator("content")
+    def validate_content(cls, value : str):
+        space_count = len(value.split(" "))
+        
+        if len(space_count) <= 5:
+            raise ValueError("Invalid notification content.")
         
         return value
