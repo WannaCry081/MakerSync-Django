@@ -1,7 +1,12 @@
 from ninja_extra import (
     api_controller, ControllerBase, route)
+from api.v2.schemas import (
+    MachineSchema, UserSchema)
 
 
 @api_controller("/machines/{code}/users")
 class UserController(ControllerBase):
-    pass
+    
+    @route.get("/")
+    def list(self, code : MachineSchema):
+        pass
