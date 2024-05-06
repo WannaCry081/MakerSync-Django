@@ -10,3 +10,8 @@ class UserController(ControllerBase):
     @route.get("/")
     def list(self, code : MachineSchema):
         pass
+    
+    
+    @route.get("/{email}")
+    def retrieve(self, code : MachineSchema, email : str):
+        pass
