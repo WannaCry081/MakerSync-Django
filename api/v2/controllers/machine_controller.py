@@ -2,9 +2,9 @@ from ninja_extra import (
     api_controller, route, ControllerBase)
 from api.v2.exceptions import (
     ConflictException, ServerErrorException)
-from api.v2.schemas import MachineSchema
+from api.v2.schemas import (
+    MachineSchema, ErrorSchema)
 from api.v2.services import MachineService
-from api.v2.schemas import ErrorSchema
 
 
 @api_controller("/machines")
