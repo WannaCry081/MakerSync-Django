@@ -27,3 +27,8 @@ class UserController(ControllerBase):
     def update(self, code : MachineSchema, 
                email : str, request : UserSchema):
         pass
+    
+    
+    @route.delete("/{email}")
+    def destroy(self, code : MachineSchema, email : str):
+        pass
