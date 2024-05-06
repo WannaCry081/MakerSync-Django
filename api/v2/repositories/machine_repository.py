@@ -13,3 +13,11 @@ class MachineRepository:
             return True
         
         return False
+    
+    
+    @staticmethod
+    def create_machine(request : MachineSchema):
+        machine = Machine.objects.create(
+            code = request.code)
+
+        return True
