@@ -1,8 +1,12 @@
 from ninja_extra import (
     api_controller, ControllerBase, route)
+from api.v2.schemas import (
+    MachineSchema, NotificationSchema)
 
 
-@api_controller("/notifications")
+@api_controller("/machines/{code}/notifications")
 class NotificationController(ControllerBase):
-    pass
     
+    @route.get("/")
+    def list(self, code : MachineSchema):
+        pass
