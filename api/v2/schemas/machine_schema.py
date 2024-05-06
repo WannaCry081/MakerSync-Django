@@ -15,3 +15,8 @@ class CreateMachineSchema(BaseModel):
             return value
         except ValueError:
             raise ValueError("Code is not valid.")
+
+
+class MachineSchema(BaseModel):
+    
+    code : str = Field(default = "")
