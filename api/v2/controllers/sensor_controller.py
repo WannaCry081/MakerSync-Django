@@ -20,3 +20,8 @@ class SensorController(ControllerBase):
     @route.put("/{sensor_id}")
     def update(self, code : MachineSchema, request : SensorSchema):
         pass
+    
+    
+    @route.delete("/{sensor_id}")
+    def destroy(self, code : MachineSchema):
+        pass
