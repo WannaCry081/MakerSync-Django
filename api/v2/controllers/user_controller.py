@@ -15,3 +15,9 @@ class UserController(ControllerBase):
     @route.get("/{email}")
     def retrieve(self, code : MachineSchema, email : str):
         pass
+    
+    
+    @route.post("/")
+    def create(self, code : MachineSchema, 
+               request : UserSchema):
+        pass
