@@ -11,3 +11,7 @@ class SensorController(ControllerBase):
     def retrieve(self, code : MachineSchema, sensor_id : SensorSchema):
         pass
     
+    
+    @route.post("/")
+    def create(self, code : MachineSchema, request : SensorSchema):
+        pass
