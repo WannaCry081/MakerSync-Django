@@ -3,7 +3,7 @@ from pydantic import (
     BaseModel, Field, validator)
 
 
-class CreateMachineSchema(BaseModel):
+class MachineSchema(BaseModel):
 
     code : str = Field(..., title = "Machine Code")
     
@@ -15,8 +15,3 @@ class CreateMachineSchema(BaseModel):
             return value
         except ValueError:
             raise ValueError("Code is not valid.")
-
-
-class MachineSchema(BaseModel):
-    
-    code : str = Field(default = "")
