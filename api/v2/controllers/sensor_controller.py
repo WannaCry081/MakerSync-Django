@@ -15,3 +15,8 @@ class SensorController(ControllerBase):
     @route.post("/")
     def create(self, code : MachineSchema, request : SensorSchema):
         pass
+    
+    
+    @route.put("/{sensor_id}")
+    def update(self, code : MachineSchema, request : SensorSchema):
+        pass
