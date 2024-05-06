@@ -10,3 +10,8 @@ class NotificationController(ControllerBase):
     @route.get("/")
     def list(self, code : MachineSchema):
         pass
+    
+    
+    @route.get("/{notification_id}")
+    def retrieve(self, code : MachineSchema, notification_id : int):
+        pass
