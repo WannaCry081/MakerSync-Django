@@ -1,0 +1,2 @@
+class SensorRepository:
+    pass
