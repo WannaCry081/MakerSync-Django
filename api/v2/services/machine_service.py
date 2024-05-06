@@ -2,6 +2,8 @@ from api.v2.schemas import (
     MachineSchema, SensorSchema)
 from api.v2.exceptions import ( 
     ConflictException, ServerErrorException)
+from api.v2.repositories import (
+    MachineRepository)
 
 
 class MachineService:
