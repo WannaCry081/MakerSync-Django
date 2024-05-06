@@ -6,11 +6,11 @@ from pydantic import (
 class NotificationSchema(BaseModel):
     
     title : str = Field(
-        ..., title = "Title") 
+        ..., title = "Notification Title") 
     content : str = Field(
-        ..., title = "Content")
-    date : date = Field(
-        ..., title = "Date")
+        ..., title = "Notification Content")
+    datetime : date = Field(
+        ..., title = "Notification Date")
     
     
     @validator("title")

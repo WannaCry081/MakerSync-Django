@@ -5,14 +5,14 @@ from pydantic import (
 class SensorSchema(BaseModel):
 
     is_start : bool = Field(
-        title = "Is Start", default = False)
+        title = "Sensor Is Start", default = False)
     is_stop : bool = Field(
-        title = "Is Stop", default = False)
+        title = "Sensor Is Stop", default = False)
     is_initialize : bool=Field(
-        title = "Is Initialize", default = False)
+        title = "Sensor Is Initialize", default = False)
     counter : int = Field(
-        title = "Counter", default = 0)
+        title = "Sensor Counter", default = 0)
     time : int = Field(
-        title = "Time", default = 0)
+        title = "Sensor Time", default = 0)
     temperature : float = Field(
-        title = "Temperature", default = 0)
+        title = "Sensor Temperature", default = 0)

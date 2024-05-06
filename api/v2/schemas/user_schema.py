@@ -7,4 +7,4 @@ class UserSchema(BaseModel):
     username : str = Field(
         ..., title = "Username")
     email : EmailStr = Field(
-        ..., title = "Email")
+        ..., title = "User Email")
