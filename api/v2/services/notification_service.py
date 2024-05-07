@@ -1,2 +1,5 @@
 class NotificationService:
-    pass
+    
+    @staticmethod
+    def list(code : MachineSchema):
+        pass
