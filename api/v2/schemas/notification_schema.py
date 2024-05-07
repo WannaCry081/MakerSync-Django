@@ -3,14 +3,12 @@ from pydantic import (
     BaseModel, Field, validator)
 
 
-class NotificationSchema(BaseModel):
+class CreateNotificationSchema(BaseModel):
     
     title : str = Field(
         ..., title = "Notification Title") 
     content : str = Field(
         ..., title = "Notification Content")
-    created : datetime = Field(
-        ..., title = "Notification Date")
     
     
     @validator("title")
@@ -30,3 +28,14 @@ class NotificationSchema(BaseModel):
             raise ValueError("Invalid notification content.")
         
         return value
+    
+    
+class NotificationSchema(BaseModel):
+    
+    title : str = Field(
+        ..., title = "Notification Title") 
+    content : str = Field(
+        ..., title = "Notification Content")
+    created : datetime = Field(
+        ..., title = "Notification Date")
+    
