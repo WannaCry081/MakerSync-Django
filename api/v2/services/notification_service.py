@@ -14,13 +14,30 @@ class NotificationService:
         if not MachineRepository.is_machine_exist(machine_code):
             raise NotFoundException()
         
-        return NotificationRepository.get_notifications(machine_code)
+        notifications = NotificationRepository.get_notifications(
+            machine_code)
+        
+        response = [NotificationSchema(**notification.__dict__).dict()
+                    for notification in notifications]
+    
+        return response
+        
     
     
     @staticmethod
-    def retrieve(machine_id : MachineSchema, notification_id : int):
-        pass
-    
+    def retrieve(machine_code : str, notification_id : int):
+        
+        if not MachineRepository.is_machine_exist(machine_code):
+            raise NotFoundException()
+        
+        notification = NotificationRepository.get_notification(
+            machine_code, notification_id)
+        
+        if not notification:
+            raise NotFoundException()
+        
+        return NotificationSchema(**notification.__dict__).dict()
+        
     
     @staticmethod
     def create(machine_id : MachineSchema, request : NotificationSchema):
