@@ -1,6 +1,6 @@
 from django.db.models import Q
 from api.v2.schemas import (
-    MachineSchema, NotificationSchema)
+    MachineSchema, CreateNotificationSchema)
 from api.v2.models import (
     Notification, Machine)
 
@@ -23,3 +23,16 @@ class NotificationRepository:
             Q(machine = machine) & Q(id = notification_id)).first()
         
         return notification
+    
+    
+    @staticmethod
+    def create_notification(code : str, 
+                            notification_request : CreateNotificationSchema):
+        machine = Machine.objects.get(code = code)
+        notification = Notification.objects.create(
+            **notification_request.dict(), machine = machine)
+        
+        if notification:
+            return True
+        
+        return False
