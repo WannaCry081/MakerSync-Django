@@ -19,7 +19,7 @@ class NotificationRepository:
     @staticmethod
     def get_notification(code : str, notification_id : int):
         machine = Machine.objects.get(code = code)
-        notification = notification.objects.filter(
-            Q(machine = machine) & Q(id = notification_id))
+        notification = Notification.objects.filter(
+            Q(machine = machine) & Q(id = notification_id)).first()
         
         return notification
