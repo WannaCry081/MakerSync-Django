@@ -1,7 +1,8 @@
 from ninja_extra import (
     api_controller, ControllerBase, route)
 from api.v2.schemas import (
-    NotificationSchema, ErrorSchema)
+    NotificationSchema, CreateNotificationSchema,
+    ErrorSchema)
 from api.v2.exceptions import (
     NotFoundException, ServerErrorException)
 from api.v2.services import NotificationService
@@ -34,5 +35,13 @@ class NotificationController(ControllerBase):
 
     
     @route.post("/")
-    def create(self, machine_code : str, request : NotificationSchema):
-        pass
+    def create(self, machine_code : str, 
+               notification_request : CreateNotificationSchema):
+        try:
+            response = NotificationService.create(
+                machine_code, notification_request)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ServerErrorException(**e.__dict__)
