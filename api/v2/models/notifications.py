@@ -9,12 +9,12 @@ class Notification(models.Model):
         blank = False)
     content = models.TextField(
         blank = True, null = True)
-    datetime = models.DateTimeField(
+    created = models.DateTimeField(
         auto_now_add = True)
     machine = models.ForeignKey(
         Machine, on_delete = models.CASCADE, 
         blank = True)
-    
+
     
     def __str__(self):
         return self.title 

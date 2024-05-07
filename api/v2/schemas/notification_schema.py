@@ -9,7 +9,7 @@ class NotificationSchema(BaseModel):
         ..., title = "Notification Title") 
     content : str = Field(
         ..., title = "Notification Content")
-    datetime : date = Field(
+    created : date = Field(
         ..., title = "Notification Date")
     
     
