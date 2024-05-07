@@ -23,8 +23,15 @@ class NotificationController(ControllerBase):
     
     @route.get("/{notification_id}")
     def retrieve(self, machine_code : str, notification_id : int):
-        pass
-    
+        try:
+            response = NotificationService.retrieve(
+                machine_code, notification_id)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
+
     
     @route.post("/")
     def create(self, machine_code : str, request : NotificationSchema):
