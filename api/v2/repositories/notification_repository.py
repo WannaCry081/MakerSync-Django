@@ -13,10 +13,8 @@ class NotificationRepository:
         notifications = Notification.objects.filter(
             machine = machine)
 
-        return [NotificationSchema(
-            **notification.__dict__).dict() 
-            for notification in notifications]
-        
+        return notifications
+    
     
     @staticmethod
     def get_notification(code : str, notification_id : int):
@@ -25,5 +23,3 @@ class NotificationRepository:
             Q(machine = machine) & Q(id = notification_id))
         
         return notification
-        
-        
