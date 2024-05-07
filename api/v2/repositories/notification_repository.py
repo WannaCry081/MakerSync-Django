@@ -1,3 +1,4 @@
+from django.db.models import Q
 from api.v2.schemas import (
     MachineSchema, NotificationSchema)
 from api.v2.models import (
@@ -15,3 +16,14 @@ class NotificationRepository:
         return [NotificationSchema(
             **notification.__dict__).dict() 
             for notification in notifications]
+        
+    
+    @staticmethod
+    def get_notification(code : str, notification_id : int):
+        machine = Machine.objects.get(code = code)
+        notification = notification.objects.filter(
+            Q(machine = machine) & Q(id = notification_id))
+        
+        return notification
+        
+        
