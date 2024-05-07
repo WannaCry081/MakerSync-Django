@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import datetime
 from pydantic import (
     BaseModel, Field, validator)
 
@@ -9,7 +9,7 @@ class NotificationSchema(BaseModel):
         ..., title = "Notification Title") 
     content : str = Field(
         ..., title = "Notification Content")
-    created : date = Field(
+    created : datetime = Field(
         ..., title = "Notification Date")
     
     
@@ -26,7 +26,7 @@ class NotificationSchema(BaseModel):
     def validate_content(cls, value : str):
         space_count = len(value.split(" "))
         
-        if len(space_count) <= 5:
+        if space_count <= 5:
             raise ValueError("Invalid notification content.")
         
         return value
