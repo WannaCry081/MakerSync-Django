@@ -10,3 +10,6 @@ class NotificationService:
         pass
     
     
+    @staticmethod
+    def create(code : MachineSchema, request : NotificationSchema):
+        pass
