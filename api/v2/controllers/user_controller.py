@@ -4,31 +4,31 @@ from api.v2.schemas import (
     MachineSchema, UserSchema)
 
 
-@api_controller("/machines/{code}/users")
+@api_controller("/machines/{machine_id}/users")
 class UserController(ControllerBase):
     
     @route.get("/")
-    def list(self, code : MachineSchema):
+    def list(self, machine_id : MachineSchema):
         pass
     
     
     @route.get("/{email}")
-    def retrieve(self, code : MachineSchema, email : str):
+    def retrieve(self, machine_id : MachineSchema, email : str):
         pass
     
     
     @route.post("/")
-    def create(self, code : MachineSchema, 
+    def create(self, machine_id : MachineSchema, 
                request : UserSchema):
         pass
     
     
     @route.put("/{email}")
-    def update(self, code : MachineSchema, 
+    def update(self, machine_id : MachineSchema, 
                email : str, request : UserSchema):
         pass
     
     
     @route.delete("/{email}")
-    def destroy(self, code : MachineSchema, email : str):
+    def destroy(self, machine_id : MachineSchema, email : str):
         pass
