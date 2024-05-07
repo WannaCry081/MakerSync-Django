@@ -18,5 +18,8 @@ class MachineRepository:
     def create_machine(code : str):
         machine = Machine.objects.create(
             code = code)
-
-        return True
+        
+        if machine:
+            return True
+        
+        return False
