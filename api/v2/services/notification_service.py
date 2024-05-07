@@ -1,9 +1,11 @@
 from api.v2.repositories import (
     MachineRepository, NotificationRepository)
 from api.v2.exceptions import (
-    NotFoundException, ServerErrorException)
+    NotFoundException, ServerErrorException, 
+    BadRequestException)
 from api.v2.schemas import (
-    MachineSchema, NotificationSchema)
+    MachineSchema, NotificationSchema,
+    CreateNotificationSchema)
 
 
 class NotificationService:
@@ -21,7 +23,6 @@ class NotificationService:
                     for notification in notifications]
     
         return response
-        
     
     
     @staticmethod
@@ -40,5 +41,14 @@ class NotificationService:
         
     
     @staticmethod
-    def create(machine_id : MachineSchema, request : NotificationSchema):
-        pass
+    def create(machine_code : str, 
+               notification_request : CreateNotificationSchema):
+
+        if not MachineRepository.is_machine_exist(machine_code):
+            raise NotFoundException()
+
+        if not NotificationRepository.create_notification(
+            machine_code, notification_request): 
+            raise BadRequestException()
+        
+        return NotificationSchema(**notification_request.dict())
