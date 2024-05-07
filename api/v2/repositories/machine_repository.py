@@ -1,13 +1,12 @@
 from api.v2.models import Machine
-from api.v2.schemas import MachineSchema
 
 
 class MachineRepository:
     
     @staticmethod
-    def is_machine_exist(request : MachineSchema):
+    def is_machine_exist(code : str):
         machine = Machine.objects.filter(
-            code = request.code).first()
+            code = code).first()
         
         if machine:
             return True
@@ -16,8 +15,8 @@ class MachineRepository:
     
     
     @staticmethod
-    def create_machine(request : MachineSchema):
+    def create_machine(code : str):
         machine = Machine.objects.create(
-            code = request.code)
+            code = code)
 
         return True

@@ -11,10 +11,10 @@ from api.v2.services import MachineService
 class MachineController(ControllerBase):
     
     @route.post("/")
-    def create(self, request : MachineSchema):  
+    def create(self, machine_request : MachineSchema):  
         try:
-            response = MachineService.create(request)
-            return 201, response
+            response = MachineService.create(machine_request)
+            return response
         except ConflictException as e:
             return 409, ErrorSchema(**e.__dict__)
         except ServerErrorException as e:

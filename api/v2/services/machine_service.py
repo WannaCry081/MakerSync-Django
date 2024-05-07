@@ -9,12 +9,13 @@ from api.v2.repositories import (
 class MachineService:
     
     @staticmethod
-    def create(request : MachineSchema):
+    def create(machine_request : MachineSchema):
         
-        if MachineRepository.is_machine_exist(request):
+        code = machine_request.code 
+        if MachineRepository.is_machine_exist(code):
             raise ConflictException()
         
-        if not MachineRepository.create_machine(request):
+        if not MachineRepository.create_machine(code):
             raise ServerErrorException() 
         
         return SensorSchema()
