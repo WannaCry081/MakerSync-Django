@@ -8,7 +8,7 @@ from api.v2.schemas import (
 class SensorController(ControllerBase):
     
     @route.get("/{sensor_id}")
-    def retrieve(self, code : MachineSchema, sensor_id : SensorSchema):
+    def retrieve(self, code : MachineSchema, sensor_id : int):
         pass
     
     
@@ -18,10 +18,10 @@ class SensorController(ControllerBase):
     
     
     @route.put("/{sensor_id}")
-    def update(self, code : MachineSchema, request : SensorSchema):
+    def update(self, code : MachineSchema, sensor_id : int, request : SensorSchema):
         pass
     
     
     @route.delete("/{sensor_id}")
-    def destroy(self, code : MachineSchema):
+    def destroy(self, code : MachineSchema, sensor_id : int):
         pass
