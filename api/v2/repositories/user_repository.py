@@ -28,3 +28,14 @@ class UserRepository:
             machine = machine).all()
         
         return users
+    
+    
+    @staticmethod 
+    def get_user(code : str, email : EmailStr):
+        
+        machine = Machine.objects.get(code = code)
+        user = User.objects.filter(
+            Q(machine = machine) & Q(email = email)
+        ).first()
+        
+        return user
