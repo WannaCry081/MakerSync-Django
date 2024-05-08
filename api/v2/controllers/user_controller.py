@@ -71,4 +71,16 @@ class UserController(ControllerBase):
     
     @route.delete("/{email}")
     def destroy(self, machine_code : str, email : EmailStr):
-        pass
+        
+        try:
+            response = UserService.destroy(
+                machine_code, email)
+            return response
+        except BadRequestException as e:
+            return ErrorSchema(**e.__dict__)
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ConflictException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
