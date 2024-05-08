@@ -2,7 +2,11 @@ from pydantic import EmailStr
 from ninja_extra import (
     api_controller, ControllerBase, route)
 from api.v2.schemas import (
-    MachineSchema, UserSchema)
+    MachineSchema, UserSchema, ErrorSchema)
+from api.v2.exceptions import (
+    NotFoundException, ServerErrorException,
+    BadRequestException)
+from api.v2.services import UserService
 
 
 @api_controller("/machines/{machine_code}/users")
@@ -10,7 +14,13 @@ class UserController(ControllerBase):
     
     @route.get("/")
     def list(self, machine_code : str):
-        pass
+        try:
+            response = UserService.list(machine_code)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
     
     
     @route.get("/{email}")
