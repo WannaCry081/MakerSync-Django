@@ -35,10 +35,17 @@ class SensorController(ControllerBase):
             return ErrorSchema(**e.__dict__)
     
     
-    @route.put("/{sensor_id}")
-    def update(self, machine_code : str, sensor_id : int, 
-               request : SensorSchema):
-        pass
+    @route.put("/")
+    def update(self, machine_code : str, 
+               sensor_request : SensorSchema):
+        try:
+            response = SensorService.update(
+                machine_code, sensor_request)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
     
     
     @route.delete("/{sensor_id}")
