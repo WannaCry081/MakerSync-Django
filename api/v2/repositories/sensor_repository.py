@@ -25,3 +25,28 @@ class SensorRepository:
             return True
         
         return False
+    
+    
+    @staticmethod
+    def update_sensor(code : str, **kwargs):
+        
+        sensor_values = [
+            "is_start",
+            "is_stop",
+            "is_initialize",
+            "temperature",
+            "time",
+            "counter"
+        ]
+        
+        if not all(key in sensor_values for key in kwargs.keys()):
+            return False
+        
+        machine = Machine.objects.get(code = code)
+        sensor = Sensor.objects.get(machine = machine)
+        
+        for key, value in kwargs.items():
+            setattr(sensor, key, value)
+            
+        sensor.save()
+        return True
