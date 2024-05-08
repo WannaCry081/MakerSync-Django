@@ -25,8 +25,8 @@ class SensorRequestSchema(BaseModel):
         Title="Counter", 
         default=0
     )
-    timer : int=Field(
-        Title="Timer", 
+    time : int=Field(
+        Title="Time", 
         default=0
     )
     temperature : float=Field(

@@ -15,7 +15,7 @@ class SensorRepository:
             "is_stop" : False,
             "is_initialize" : False,
             "counter" : 0,
-            "timer" : 0,
+            "time" : 0,
             "temperature" : 0
         })
         return True
