@@ -25,7 +25,14 @@ class UserController(ControllerBase):
     
     @route.get("/{email}")
     def retrieve(self, machine_code : str, email : EmailStr):
-        pass
+        try:
+            response = UserService.retrieve(
+                machine_code, email)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
     
     
     @route.post("/")
