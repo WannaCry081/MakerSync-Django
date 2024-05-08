@@ -25,8 +25,14 @@ class SensorController(ControllerBase):
             
     
     @route.post("/")
-    def create(self, machine_code : str, request : SensorSchema):
-        pass
+    def create(self, machine_code : str):
+        try:
+            response = SensorService.create(machine_code)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
     
     
     @route.put("/{sensor_id}")
