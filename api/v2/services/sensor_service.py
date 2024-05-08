@@ -53,3 +53,14 @@ class SensorService:
         
         return sensor_request.dict()
         
+        
+    @staticmethod
+    def destroy(machine_code : str):
+        
+        if not MachineRepository.is_machine_exist(machine_code):
+            raise NotFoundException()
+        
+        if not SensorRepository.delete_sensor(machine_code):    
+            raise ServerErrorException()
+    
+        return {}
