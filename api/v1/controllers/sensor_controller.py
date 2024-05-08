@@ -1,8 +1,7 @@
 from ninja_extra import (
     route, api_controller, ControllerBase)
 from api.v1.schemas import (
-    SensorRequestSchema, SensorResponseSchema, 
-    CreateSensorRequestSchema, ErrorResponseSchema)
+    ErrorSchema, CreateSensorSchema, SensorSchema)
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
     NotFoundException)
@@ -19,16 +18,16 @@ class SensorController(ControllerBase):
                 summary = "Create a new sensor", 
                 description = "Create a new sensor with the provided ID.",
                 response={
-                    201 : SensorResponseSchema, 
-                    400 : ErrorResponseSchema,
-                    500 : ErrorResponseSchema
+                    201 : SensorSchema, 
+                    400 : ErrorSchema,
+                    500 : ErrorSchema
                 })
-    def create(self, sensor_request : CreateSensorRequestSchema):
+    def create(self, sensor_request : CreateSensorSchema):
         """
         Endpoint to create a new sensor.
         
         Args:
-            sensor_request (CreateSensorRequestSchema): The request data for adding the record of the machine in the database.
+            sensor_request (CreateSensorSchema): The request data for adding the record of the machine in the database.
 
         Returns:
             tuple: A tuple containing status code and response data.
@@ -37,12 +36,12 @@ class SensorController(ControllerBase):
             response = SensorService.create(sensor_request)
             return 201, response
         except BadRequestException as e:
-            return 400, ErrorResponseSchema(
+            return 400, ErrorSchema(
                 status=e.status, 
                 detail=e.detail
             )
         except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
+            return 500, ErrorSchema(
                 status=e.status, 
                 detail=e.detail
             )
@@ -52,10 +51,10 @@ class SensorController(ControllerBase):
                summary = "Retrieve a sensor",
                description = "Retrieve details of a sensor with the provided ID.", 
                response = {
-                    200 : SensorResponseSchema,
-                    400 : ErrorResponseSchema,
-                    404 : ErrorResponseSchema,
-                    500 : ErrorResponseSchema
+                    200 : SensorSchema,
+                    400 : ErrorSchema,
+                    404 : ErrorSchema,
+                    500 : ErrorSchema
                 })
     def retrieve(self, sensor_id : str):
         """
@@ -71,17 +70,17 @@ class SensorController(ControllerBase):
             response = SensorService.retrieve(sensor_id)
             return 200, response
         except BadRequestException as e:
-            return 400, ErrorResponseSchema(
+            return 400, ErrorSchema(
                 status=e.status,
                 detail=e.detail
             )
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
+            return 404, ErrorSchema(
                 status=e.status,
                 detail=e.detail
             )
         except Exception as e:
-            return 500, ErrorResponseSchema(
+            return 500, ErrorSchema(
                 status=500,
                 detail="Internal Server Error"
             )
@@ -91,19 +90,19 @@ class SensorController(ControllerBase):
                summary = "Update a sensor",
                description = "Update details of a sensor with the provided ID.",
                response = {
-                200 : SensorResponseSchema,
-                400 : ErrorResponseSchema,
-                404 : ErrorResponseSchema,
-                500 : ErrorResponseSchema
+                200 : SensorSchema,
+                400 : ErrorSchema,
+                404 : ErrorSchema,
+                500 : ErrorSchema
                 })        
     def update(self, sensor_id : str, 
-               sensor_request : SensorRequestSchema):
+               sensor_request : SensorSchema):
         """
         Endpoint to update details of a sensor.
         
         Args:
             sensor_id (str): The ID of the sensor to update.
-            sensor_request (SensorRequestSchema): The request data for updating the sensor.
+            sensor_request (SensorSchema): The request data for updating the sensor.
         
         Returns:
             tuple: A tuple containing status code and response data.
@@ -112,17 +111,17 @@ class SensorController(ControllerBase):
             response = SensorService.update(sensor_id, sensor_request)
             return 200, response
         except BadRequestException as e:
-            return 400, ErrorResponseSchema(
+            return 400, ErrorSchema(
                 status=e.status,
                 detail=e.detail
             )
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
+            return 404, ErrorSchema(
                 status=e.status,
                 detail=e.detail
             )
         except Exception as e:
-            return 500, ErrorResponseSchema(
+            return 500, ErrorSchema(
                 status=500,
                 detail="Internal Server Error"
             )
@@ -133,8 +132,8 @@ class SensorController(ControllerBase):
                   description = "Delete a sensor with the provided ID.",
                   response={
                     204 : dict,
-                    404 : ErrorResponseSchema,
-                    500 : ErrorResponseSchema
+                    404 : ErrorSchema,
+                    500 : ErrorSchema
                     })
     def destroy(self, sensor_id : str):
         """
@@ -150,12 +149,12 @@ class SensorController(ControllerBase):
             if SensorService.destroy(sensor_id):
                 return 204, {"detail" : "Successfully delete collection"}
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
+            return 404, ErrorSchema(
                 status=e.status,
                 detail=e.detail
             )
         except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
+            return 500, ErrorSchema(
                 status=e.status, 
                 detail=e.detail
             )
