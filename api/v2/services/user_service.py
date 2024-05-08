@@ -86,3 +86,24 @@ class UserService:
 
         return user_request.dict()
         
+        
+    @staticmethod
+    def destroy(machine_code : str,  email : EmailStr):
+        
+        if not MachineRepository.is_machine_exist(
+            machine_code):
+            raise NotFoundException()
+        
+        if not UserRepository.is_user_exist(
+            machine_code, email):
+            raise NotFoundException()
+        
+        user = UserRepository.get_user(
+            machine_code, email)
+        
+        response = UserRepository.delete_user(user)
+        
+        if not response:
+            raise BadRequestException()
+        
+        return {}
