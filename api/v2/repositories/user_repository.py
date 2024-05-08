@@ -68,3 +68,9 @@ class UserRepository:
         
         user.save()
         return True
+    
+    
+    @staticmethod
+    def delete_user(user):
+        user.delete()
+        return True
