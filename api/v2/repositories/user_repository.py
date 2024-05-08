@@ -55,3 +55,16 @@ class UserRepository:
             return True
         
         return False
+    
+    
+    @staticmethod
+    def update_user(code : str, user, **kwargs):
+        
+        if not ("username" in kwargs and "email" in kwargs):
+            return False
+        
+        for key, value in kwargs.items():
+            setattr(user, key, value)
+        
+        user.save()
+        return True
