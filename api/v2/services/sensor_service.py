@@ -2,7 +2,7 @@ from api.v2.repositories import (
     SensorRepository, MachineRepository)
 from api.v2.exceptions import (
     ConflictException, NotFoundException,
-    ServerErrorException)
+    ServerErrorException, BadRequestException)
 from api.v2.schemas import (
     SensorSchema)
 
@@ -37,3 +37,19 @@ class SensorService:
             raise ServerErrorException()
         
         return SensorSchema().dict()
+    
+    
+    @staticmethod
+    def update(machine_code : str, sensor_request : SensorSchema):
+        
+        if not MachineRepository.is_machine_exist(machine_code):
+            raise NotFoundException()
+        
+        sensor = SensorRepository.update_sensor(
+            machine_code, **sensor_request.dict())
+        
+        if not sensor:
+            raise BadRequestException()
+        
+        return sensor_request.dict()
+        
