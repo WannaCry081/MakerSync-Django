@@ -41,7 +41,7 @@ class SensorController(ControllerBase):
             return 500, ErrorSchema(**e.__dict__)
             
     
-    @route.get("/{sensor_id}",
+    @route.get("/{machine_code}",
                summary = "Retrieve a sensor",
                description = "Retrieve details of a sensor with the provided ID.", 
                response = {
@@ -50,18 +50,18 @@ class SensorController(ControllerBase):
                     404 : ErrorSchema,
                     500 : ErrorSchema
                 })
-    def retrieve(self, sensor_id : str):
+    def retrieve(self, machine_code : str):
         """
         Endpoint to retrieve details of a sensor.
         
         Args:
-            sensor_id (str): The ID of the sensor to retrieve.
+            machine_code (str): The ID of the sensor to retrieve.
         
         Returns:
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.retrieve(sensor_id)
+            response = SensorService.retrieve(machine_code)
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(**e.__dict__)
@@ -74,7 +74,7 @@ class SensorController(ControllerBase):
             )
             
     
-    @route.put("/{sensor_id}", 
+    @route.put("/{machine_code}", 
                summary = "Update a sensor",
                description = "Update details of a sensor with the provided ID.",
                response = {
@@ -83,20 +83,20 @@ class SensorController(ControllerBase):
                 404 : ErrorSchema,
                 500 : ErrorSchema
                 })        
-    def update(self, sensor_id : str, 
+    def update(self, machine_code : str, 
                sensor_request : SensorSchema):
         """
         Endpoint to update details of a sensor.
         
         Args:
-            sensor_id (str): The ID of the sensor to update.
+            machine_code (str): The ID of the sensor to update.
             sensor_request (SensorSchema): The request data for updating the sensor.
         
         Returns:
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.update(sensor_id, sensor_request)
+            response = SensorService.update(machine_code, sensor_request)
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(**e.__dict__)
@@ -109,7 +109,7 @@ class SensorController(ControllerBase):
             )
 
     
-    @route.delete("/{sensor_id}", 
+    @route.delete("/{machine_code}", 
                   summary = "Delete a sensor",
                   description = "Delete a sensor with the provided ID.",
                   response={
@@ -117,18 +117,18 @@ class SensorController(ControllerBase):
                     404 : ErrorSchema,
                     500 : ErrorSchema
                     })
-    def destroy(self, sensor_id : str):
+    def destroy(self, machine_code : str):
         """
         Endpoint to delete a sensor.
         
         Args:
-            sensor_id (str): The ID of the sensor to delete.
+            machine_code (str): The ID of the sensor to delete.
         
         Returns:
             tuple: A tuple containing status code and response data.
         """
         try:
-            if SensorService.destroy(sensor_id):
+            if SensorService.destroy(machine_code):
                 return 204, {"detail" : "Successfully delete collection"}
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
