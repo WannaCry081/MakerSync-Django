@@ -12,3 +12,16 @@ class SensorRepository:
             machine = machine).first()
         
         return sensor
+    
+    
+    @staticmethod 
+    def create_sensor(code : str):
+        
+        machine = Machine.objects.get(code = code)
+        sensor = Sensor.objects.create(
+            machine = machine)
+        
+        if sensor:
+            return True
+        
+        return False
