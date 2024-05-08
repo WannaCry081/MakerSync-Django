@@ -1,11 +1,9 @@
 from pydantic import BaseModel, Field
 
 
-class CreateSensorRequestSchema(BaseModel):
+class CreateSensorSchema(BaseModel):
     code : str = Field(
-        Title = "Code",
-        default = ""
-    )
+        ..., title = "Sensor Code")
     
 
 class SensorRequestSchema(BaseModel):
