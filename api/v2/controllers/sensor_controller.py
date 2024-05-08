@@ -48,6 +48,12 @@ class SensorController(ControllerBase):
             return ErrorSchema(**e.__dict__)
     
     
-    @route.delete("/{sensor_id}")
-    def destroy(self, machine_code : str, sensor_id : int):
-        pass
+    @route.delete("/")
+    def destroy(self, machine_code : str):
+        try:
+            response = SensorService.destroy(machine_code)
+            return response
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
