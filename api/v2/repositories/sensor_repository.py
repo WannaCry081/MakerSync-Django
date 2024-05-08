@@ -50,3 +50,17 @@ class SensorRepository:
             
         sensor.save()
         return True
+    
+    
+    @staticmethod
+    def delete_sensor(code : str):
+        
+        machine = Machine.objects.get(code = code)
+        sensor = Sensor.objects.get(
+            machine = machine)
+        
+        if not sensor:
+            return False
+        
+        sensor.delete()
+        return True
