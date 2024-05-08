@@ -54,9 +54,20 @@ class UserController(ControllerBase):
         
     @route.put("/{email}")
     def update(self, machine_code : str, 
-               email : EmailStr, request : UserSchema):
-        pass
-    
+               email : EmailStr, user_request : UserSchema):
+        try:
+            response = UserService.update(
+                machine_code, email, user_request)
+            return response
+        except BadRequestException as e:
+            return ErrorSchema(**e.__dict__)
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ConflictException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
+        
     
     @route.delete("/{email}")
     def destroy(self, machine_code : str, email : EmailStr):
