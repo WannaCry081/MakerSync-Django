@@ -39,3 +39,19 @@ class UserRepository:
         ).first()
         
         return user
+    
+    
+    @staticmethod
+    def create_user(code : str, **kwargs):
+        
+        if not ("username" in kwargs and "email" in kwargs):
+            return False
+        
+        machine = Machine.objects.get(code = code)
+        user = User.objects.create(
+            **kwargs, machine = machine)
+        
+        if user:
+            return True
+        
+        return False
