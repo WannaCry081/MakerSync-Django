@@ -5,7 +5,7 @@ from api.v2.schemas import (
     MachineSchema, UserSchema, ErrorSchema)
 from api.v2.exceptions import (
     NotFoundException, ServerErrorException,
-    BadRequestException)
+    BadRequestException, ConflictException)
 from api.v2.services import UserService
 
 
@@ -37,10 +37,21 @@ class UserController(ControllerBase):
     
     @route.post("/")
     def create(self, machine_code : str, 
-               request : UserSchema):
-        pass
-    
-    
+               user_request : UserSchema):
+        try:
+            response = UserService.create(
+                machine_code, user_request)
+            return response
+        except BadRequestException as e:
+            return ErrorSchema(**e.__dict__)
+        except NotFoundException as e:
+            return ErrorSchema(**e.__dict__)
+        except ConflictException as e:
+            return ErrorSchema(**e.__dict__)
+        except ServerErrorException as e:
+            return ErrorSchema(**e.__dict__)
+        
+        
     @route.put("/{email}")
     def update(self, machine_code : str, 
                email : EmailStr, request : UserSchema):
