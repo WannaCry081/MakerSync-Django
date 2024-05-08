@@ -36,15 +36,9 @@ class SensorController(ControllerBase):
             response = SensorService.create(sensor_request)
             return 201, response
         except BadRequestException as e:
-            return 400, ErrorSchema(
-                status=e.status, 
-                detail=e.detail
-            )
+            return 400, ErrorSchema(**e.__dict__)
         except ServerErrorException as e:
-            return 500, ErrorSchema(
-                status=e.status, 
-                detail=e.detail
-            )
+            return 500, ErrorSchema(**e.__dict__)
             
     
     @route.get("/{sensor_id}",
@@ -70,19 +64,13 @@ class SensorController(ControllerBase):
             response = SensorService.retrieve(sensor_id)
             return 200, response
         except BadRequestException as e:
-            return 400, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 404, ErrorSchema(**e.__dict__)
         except Exception as e:
             return 500, ErrorSchema(
-                status=500,
-                detail="Internal Server Error"
+                status = 500,
+                detail = "Internal Server Error"
             )
             
     
@@ -111,19 +99,13 @@ class SensorController(ControllerBase):
             response = SensorService.update(sensor_id, sensor_request)
             return 200, response
         except BadRequestException as e:
-            return 400, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 404, ErrorSchema(**e.__dict__)
         except Exception as e:
             return 500, ErrorSchema(
-                status=500,
-                detail="Internal Server Error"
+                status = 500,
+                detail = "Internal Server Error"
             )
 
     
@@ -149,12 +131,6 @@ class SensorController(ControllerBase):
             if SensorService.destroy(sensor_id):
                 return 204, {"detail" : "Successfully delete collection"}
         except NotFoundException as e:
-            return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 404, ErrorSchema(**e.__dict__)
         except ServerErrorException as e:
-            return 500, ErrorSchema(
-                status=e.status, 
-                detail=e.detail
-            )
+            return 500, ErrorSchema(**e.__dict__)
