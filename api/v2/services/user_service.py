@@ -1,3 +1,4 @@
+from pydantic import EmailStr
 from api.v2.repositories import (
     MachineRepository, UserRepository)
 from api.v2.exceptions import  (
@@ -25,3 +26,19 @@ class UserService:
         
         return response
         
+        
+    @staticmethod
+    def retrieve(machine_code : str, email : EmailStr):
+        
+        if not MachineRepository.is_machine_exist(
+            machine_code):
+            raise NotFoundException()
+        
+        if not UserRepository.is_user_exist(
+            machine_code, email):
+            raise NotFoundException()
+        
+        user = UserRepository.get_user(
+            machine_code, email)
+        
+        return UserSchema(**user.__dict__).dict()
