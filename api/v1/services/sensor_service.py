@@ -1,6 +1,6 @@
 from api.v1.schemas import (
-    SensorRequestSchema, SensorResponseSchema, 
-    CreateSensorRequestSchema)
+    SensorSchema, SensorSchema, 
+    CreateSensorSchema)
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
     NotFoundException)
@@ -10,7 +10,7 @@ from api.v1.repositories import SensorRepository
 class SensorService:
     
     @staticmethod
-    def create(sensor_request : CreateSensorRequestSchema):
+    def create(sensor_request : CreateSensorSchema):
         
         code : str = sensor_request.code
         if not SensorRepository.is_sensor_exists(code):
@@ -21,52 +21,52 @@ class SensorService:
         if not SensorRepository.create_sensor(code):
             raise ServerErrorException()
         
-        return SensorResponseSchema()
-    
+        return SensorSchema()
+
     
     @staticmethod
-    def retrieve(sensor_id : str):
+    def retrieve(machine_code : str):
         
-        if SensorRepository.is_sensor_exists(sensor_id):
+        if SensorRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
                 detail="Sensor not found."
             )
         
-        sensor=SensorRepository.get_sensor(sensor_id)
+        sensor=SensorRepository.get_sensor(machine_code)
         if not sensor:
             raise BadRequestException(
                 detail="Invalid Sensor ID"
             )
     
-        return SensorResponseSchema(**sensor)
+        return SensorSchema(**sensor)
     
     
     @staticmethod
-    def update(sensor_id : str, sensor_request : SensorRequestSchema): 
+    def update(machine_code : str, sensor_request : SensorSchema): 
         
-        if SensorRepository.is_sensor_exists(sensor_id):
+        if SensorRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
                 detail="Sensor not found."
             )
             
-        sensor=SensorRepository.update_sensor(sensor_id, sensor_request)
+        sensor=SensorRepository.update_sensor(machine_code, sensor_request)
         if not sensor: 
             raise BadRequestException(
                 detail="Invalid Sensor ID"
             )
        
-        return SensorResponseSchema(**sensor_request.dict())
+        return SensorSchema(**sensor_request.dict())
             
     
     @staticmethod
-    def destroy(sensor_id : str):
+    def destroy(machine_code : str):
         
-        if SensorRepository.is_sensor_exists(sensor_id):
+        if SensorRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
                 detail="Sensor not found."
             )
         
-        if not SensorRepository.delete_sensor(sensor_id):
+        if not SensorRepository.delete_sensor(machine_code):
             raise ServerErrorException()
         
         return True
