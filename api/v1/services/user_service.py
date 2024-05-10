@@ -1,4 +1,3 @@
-from pydantic import EmailStr
 from typing import List
 from api.v1.schemas import UserSchema
 from api.v1.repositories import (
@@ -20,7 +19,6 @@ class UserService:
         return UserRepository.get_users(machine_code)
      
     
-    
     @staticmethod    
     def create(machine_code : str, user_request: UserSchema):
         
@@ -28,7 +26,7 @@ class UserService:
             raise NotFoundException(
                 detail="Machine instance does not exists.")
             
-        email : EmailStr = user_request.email
+        email : str = user_request.email
         if UserRepository.is_user_exists(machine_code, email):
             raise ConflictException(
                 detail="Duplicate user instance.")
@@ -41,7 +39,8 @@ class UserService:
     
     
     @staticmethod    
-    def retrieve(machine_code : str, email : EmailStr):
+    def retrieve(machine_code : str, email : str):
+        print(email)
         
         if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
@@ -59,7 +58,7 @@ class UserService:
 
     
     @staticmethod    
-    def update(machine_code : str, email: EmailStr, user_request : UserSchema):
+    def update(machine_code : str, email: str, user_request : UserSchema):
         
         if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
@@ -78,7 +77,7 @@ class UserService:
     
     
     @staticmethod    
-    def destroy(machine_code : str, email : EmailStr):
+    def destroy(machine_code : str, email : str):
         
         if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
