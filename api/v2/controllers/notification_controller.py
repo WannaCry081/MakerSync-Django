@@ -44,16 +44,33 @@ class NotificationController(ControllerBase):
                 **ServerErrorException().__dict__)
     
     
-    @route.get("/{notification_id}")
+    @route.get("/{notification_id}", 
+               summary = "Retrieves a notification instance.",
+               description = "Retrieves a specific notification instance based on the path parameter inputted.", 
+               response = {
+                   200 : NotificationSchema, 
+                   404 : ErrorSchema, 
+                   500 : ErrorSchema
+               })
     def retrieve(self, machine_code : str, notification_id : int):
+        """
+        Endpoint to retrieve a notification instance based on the machine code and notification ID.
+
+        Args:
+            machine_code (str): The ID of the machine.
+            notification_id (int): The ID of the notification.
+
+        Returns:
+            tuple: A tuple containing status code and response data. 
+        """
         try:
             response = NotificationService.retrieve(
                 machine_code, notification_id)
-            return response
+            return 200, response
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
 
     
