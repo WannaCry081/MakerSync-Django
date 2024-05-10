@@ -22,8 +22,8 @@ class SensorRepository:
     
     
     @staticmethod
-    def is_sensor_exists(sensor_id : str):
-        collection=db.collection(sensor_id).get()
+    def is_sensor_exists(code : str):
+        collection = db.collection(code).get()
         return len(collection) == 0
     
     
