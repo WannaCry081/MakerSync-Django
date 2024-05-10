@@ -30,13 +30,15 @@ class NotificationService:
     def retrieve(machine_code : str, notification_id : int):
         
         if not MachineRepository.is_machine_exist(machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         notification = NotificationRepository.get_notification(
             machine_code, notification_id)
         
         if not notification:
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Notification instance does not exists.")
         
         return NotificationSchema(**notification.__dict__).dict()
         
@@ -46,7 +48,8 @@ class NotificationService:
                notification_request : CreateNotificationSchema):
 
         if not MachineRepository.is_machine_exist(machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
 
         if not NotificationRepository.create_notification(
             machine_code, notification_request): 
