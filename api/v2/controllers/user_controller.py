@@ -19,8 +19,9 @@ class UserController(ControllerBase):
             return response
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
     
     
     @route.get("/{email}")
@@ -31,8 +32,9 @@ class UserController(ControllerBase):
             return response
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
     
     
     @route.post("/")
@@ -48,8 +50,9 @@ class UserController(ControllerBase):
             return ErrorSchema(**e.__dict__)
         except ConflictException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
         
         
     @route.put("/{email}")
@@ -63,10 +66,9 @@ class UserController(ControllerBase):
             return ErrorSchema(**e.__dict__)
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ConflictException as e:
-            return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
         
     
     @route.delete("/{email}")
@@ -80,7 +82,6 @@ class UserController(ControllerBase):
             return ErrorSchema(**e.__dict__)
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ConflictException as e:
-            return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
