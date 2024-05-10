@@ -73,19 +73,37 @@ class SensorController(ControllerBase):
             return 500, ErrorSchema(**e.__dict__)
     
     
-    @route.put("/")
+    @route.put("/", 
+               summary = "Updates the sensor data.",
+               description = "Updates the sensor data based on the request data and machine code.", 
+               response = {
+                   200 : SensorSchema,
+                   400 : ErrorSchema, 
+                   404 : ErrorSchema,
+                   500 : ErrorSchema
+               })
     def update(self, machine_code : str, 
                sensor_request : SensorSchema):
+        """
+        Endpoint to update the data of the sensor instance based on the request dat and machine code.
+
+        Args:
+            machine_code (str): The ID of the machine.
+            sensor_request (SensorSchema): The request data for updating the sensor instance.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
             response = SensorService.update(
                 machine_code, sensor_request)
-            return response
+            return 200, response
         except BadRequestException as e:
-            return ErrorSchema(**e.__dict__)
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
     
     
