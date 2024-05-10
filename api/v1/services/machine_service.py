@@ -13,24 +13,24 @@ class MachineService:
     def create(sensor_request : CreateSensorSchema):
         
         machine_code : str = sensor_request.code
-        if not SensorRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_sensor_exists(machine_code):
             raise ConflictException(
-                detail="Sensors resource already exists.")
+                detail = "Duplicate machine instance.")
         
-        if not SensorRepository.create_sensor(machine_code):
-            raise ServerErrorException()
+        if not MachineRepository.create_sensor(machine_code):
+            raise BadRequestException()
         
-        return SensorSchema().dict()
+        return SensorSchema()
 
     
     @staticmethod
     def retrieve(machine_code : str):
         
-        if SensorRepository.is_sensor_exists(machine_code):
+        if MachineRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
                 detail="Machine does not exists.")
         
-        sensor = SensorRepository.get_sensor(machine_code)
+        sensor = MachineRepository.get_sensor(machine_code)
         if not sensor:
             raise BadRequestException(
                 detail="Invalid machine. Please try again later.")
@@ -41,11 +41,11 @@ class MachineService:
     @staticmethod
     def update(machine_code : str, sensor_request : SensorSchema): 
         
-        if SensorRepository.is_sensor_exists(machine_code):
+        if MachineRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
                 detail="Machine does not exists.")
             
-        sensor = SensorRepository.update_sensor(
+        sensor = MachineRepository.update_sensor(
             machine_code, **sensor_request)
         if not sensor: 
             raise BadRequestException(
@@ -57,11 +57,11 @@ class MachineService:
     @staticmethod
     def destroy(machine_code : str):
         
-        if SensorRepository.is_sensor_exists(machine_code):
+        if MachineRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
                 detail = "Machine does not exists.")
         
-        if not SensorRepository.delete_sensor(machine_code):
+        if not MachineRepository.delete_sensor(machine_code):
             raise ServerErrorException()
         
         return True
