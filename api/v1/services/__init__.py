@@ -1,7 +1,7 @@
-from api.v1.services.sensor_service import SensorService
+from api.v1.services.machine_service import MachineService
 from api.v1.services.user_service import UserService
 
 __all__=[
-    "SensorService",
+    "MachineService",
     "UserService"
 ]

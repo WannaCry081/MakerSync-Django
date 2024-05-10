@@ -1,17 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import (
+    BaseModel, Field, EmailStr)
 
 
-class UserRequestSchema(BaseModel):
-    name : str=Field(
-        Title="Name",
-        default=""
-    )
-    email : str=Field(
-        Title="Email",
-        default=""
-    )
-
-
-class UserResponseSchema(BaseModel):
-    name : str=Field(default="")
-    email : str=Field(default="")
+class UserSchema(BaseModel):
+    username : str = Field(
+        ..., title="Username")
+    email : EmailStr = Field(
+        ..., title="User Email")

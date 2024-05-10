@@ -1,6 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-class ErrorResponseSchema(BaseModel):
-    detail : str
-    status  : int
+class ErrorSchema(BaseModel):
+    detail : str = Field(
+        ..., title = "Error Detail")
+    status  : int = Field(
+        ..., title = "Error Status Code")

@@ -14,16 +14,22 @@ DEPENDENCIES_PATH="$(pwd)/requirements.txt"
 install_dependencies() {
     # Check if requirements.txt exists
     if [ -f "$DEPENDENCIES_PATH" ]; then 
-        $1 install -r "$DEPENDENCIES_PATH"
+        pip install -r "$DEPENDENCIES_PATH"
     else 
-        $1 install python-dotenv
-        $1 install django django-ninja-extra
-        $1 install firebase-admin
+        pip install python-dotenv
+        pip install django django-ninja-extra
+        pip install firebase-admin psycopg2-binary
+        pip install pydantic[email]
+
+        pip freeze > requirements.txt
     fi
 }
 
 run_server() {
     echo "Running Server..."
+
+    python manage.py makemigrations v2
+    python manage.py migrate
     python manage.py runserver
     `$1`
 }
@@ -40,7 +46,7 @@ if [ "$#" -eq 0 ] || [ "$1" = "venv" ]; then
         source "$VENV_PATH/Scripts/activate"
 
         # Installing the python dependencies
-        install_dependencies pip
+        install_dependencies
     else 
         # Activating python virtual environment
         source "$VENV_PATH/Scripts/activate"
