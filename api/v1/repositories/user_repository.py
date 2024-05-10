@@ -8,12 +8,9 @@ db = firebase_firestore()
 class UserRepository:
     
     @staticmethod
-    def create_user(code: str, user_request: UserSchema):
+    def create_user(code: str, **kwargs):
        doc = db.collection(code).document(user_request.email)
-       doc.set({
-           "name" : user_request.name,
-           "email" : user_request.email
-       })
+       doc.set(kwargs)
        return True  
    
     @staticmethod
