@@ -9,7 +9,7 @@ class UserRepository:
     
     @staticmethod
     def create_user(code: str, user_request: UserSchema):
-       doc=db.collection(code).document(user_request.email)
+       doc = db.collection(code).document(user_request.email)
        doc.set({
            "name" : user_request.name,
            "email" : user_request.email
@@ -18,34 +18,34 @@ class UserRepository:
    
     @staticmethod
     def is_user_exists(code: str, email : str):
-        user_doc=db.collection(code).document(email).get()
+        user_doc = db.collection(code).document(email).get()
         return user_doc.exists
         
     @staticmethod
     def get_user(code: str, email: str):
-        user=db.collection(code).document(email).get()
+        user = db.collection(code).document(email).get()
         if user.exists:
             return user.to_dict()
         return None
     
     @staticmethod
     def get_users(code: str):
-        users=[]
+        users = []
 
-        docs=db.collection(code).stream()
+        docs = db.collection(code).stream()
         users = [doc.to_dict() for doc in docs if doc.id != "sensors"]
         return users
 
     
     @staticmethod
     def update_user(code: str, email: str, user_request: UserSchema):
-        user=db.collection(code).document(email)
+        user = db.collection(code).document(email)
         user.update(user_request.dict())
         return True
     
     @staticmethod 
     def delete_user(code: str, email):
-        user=db.collection(code).document(email)
+        user = db.collection(code).document(email)
         user.delete()
         return True
     
