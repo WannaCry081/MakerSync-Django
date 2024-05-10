@@ -33,10 +33,12 @@ class SensorService:
     def create(machine_code : str):
         
         if not MachineRepository.is_machine_exist(machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         if SensorRepository.is_sensor_exist(machine_code):
-            raise ConflictException()
+            raise ConflictException(
+                detail = "Sensor instance does not exists.")
         
         sensor = SensorRepository.create_sensor(
             machine_code)
