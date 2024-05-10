@@ -18,7 +18,7 @@ install_dependencies() {
     else 
         $1 install python-dotenv
         $1 install django django-ninja-extra
-        $1 install firebase-admin psycopg2-binary
+        $1 install firebase-admin psycopg2
         $1 install pydantic[email]
     fi
 }
