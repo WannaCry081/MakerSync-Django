@@ -46,19 +46,20 @@ class UserService:
     @staticmethod    
     def retrieve(machine_code : str, email : EmailStr):
         
+        if not MachineRepository.is_sensor_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+        
         if not UserRepository.is_user_exists(machine_code, email):
             raise NotFoundException(
-                detail="User does not exist.")
+                detail="User does not exists.")
         
         user = UserRepository.get_user(machine_code, email)
         if not user:
-            raise BadRequestException(
-                detail="Invalid user email."
-            )
+            raise BadRequestException()
         
         return UserSchema(**user)
 
-    
     
     @staticmethod    
     def update(machine_code : str, email: EmailStr, user_request : UserSchema):
