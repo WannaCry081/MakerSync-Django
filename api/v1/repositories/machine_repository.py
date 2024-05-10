@@ -15,9 +15,12 @@ class MachineRepository:
     
     
     @staticmethod
-    def is_sensor_exists(code : str):
-        collection = db.collection(code).get()
-        return len(collection) == 0
+    def is_machine_exists(code : str):
+        for collection in db.collections():
+            if code == str(collection):
+                return True
+    
+        return False
     
     
     @staticmethod
