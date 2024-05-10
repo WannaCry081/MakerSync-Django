@@ -83,11 +83,15 @@ class UserService:
     @staticmethod    
     def destroy(machine_code : str, email : EmailStr):
         
+        if not MachineRepository.is_sensor_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+            
         if not UserRepository.get_user(machine_code, email):
             raise NotFoundException(
-                detail="User not found.")
+                detail="User does not exists.")
         
         if not UserRepository.delete_user(machine_code, email):
-            raise ServerErrorException()
+            raise BadRequestException()
         
         return True
