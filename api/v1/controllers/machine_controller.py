@@ -15,8 +15,8 @@ class MachineController(ControllerBase):
     """
 
     @route.post("/", 
-                summary = "Create a new sensor", 
-                description = "Create a new sensor with the provided ID.",
+                summary = "Create a new machine", 
+                description = "Create a new sensor instance with the provided ID.",
                 response={
                     201 : SensorSchema, 
                     400 : ErrorSchema,
@@ -25,7 +25,7 @@ class MachineController(ControllerBase):
                 })
     def create(self, sensor_request : CreateSensorSchema):
         """
-        Endpoint to create a new sensor.
+        Endpoint to create a machine instance and return a sensor instance.
         
         Args:
             sensor_request (CreateSensorSchema): The request data for adding the record of the machine in the database.
