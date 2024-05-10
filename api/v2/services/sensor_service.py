@@ -30,6 +30,9 @@ class SensorService:
         if not MachineRepository.is_machine_exist(machine_code):
             raise NotFoundException()
         
+        if SensorRepository.is_sensor_exist(machine_code):
+            raise ConflictException()
+        
         sensor = SensorRepository.create_sensor(
             machine_code)
         
