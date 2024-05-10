@@ -130,7 +130,7 @@ class MachineController(ControllerBase):
         """
         try:
             if MachineService.destroy(machine_code):
-                return 204, {"detail" : "Successfully delete collection"}
+                return 204, {}
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
         except ServerErrorException as e:

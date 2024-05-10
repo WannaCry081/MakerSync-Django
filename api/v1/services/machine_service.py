@@ -58,7 +58,7 @@ class MachineService:
         
         if MachineRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
-                detail = "Machine does not exists.")
+                detail = "Machine instance does not exists.")
         
         if not MachineRepository.delete_sensor(machine_code):
             raise ServerErrorException()
