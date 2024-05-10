@@ -16,18 +16,18 @@ You can access the MakerSync API endpoints through the provided documentation. S
 
 ### Users
 
-- **GET** `/api/v1/users/{sensor_id}`: Retrieve all users within the machine identified by a unique sensor ID.
-- **POST** `/api/v1/users/{sensor_id}`: Add a user to a specific machine identified by its sensor ID.
-- **GET** `/api/v1/users/{sensor_id}/{email}`: Retrieve user information based on email within a specific machine.
-- **PUT** `/api/v1/users/{sensor_id}/{email}`: Update user information within a specific machine based on email.
-- **DELETE** `/api/v1/users/{sensor_id}/{email}`: Delete a specific user from the machine based on email.
+- **GET** `/api/v1/machines/{machine_code}/users/`: Retrieve all users within the machine identified by a unique sensor ID.
+- **POST** `/api/v1/machines/{machine_code}/users/`: Add a user to a specific machine identified by its sensor ID.
+- **GET** `/api/v1/machines/{machine_code}/users/{email}`: Retrieve user information based on email within a specific machine.
+- **PUT** `/api/v1/machines/{machine_code}/users/{email}`: Update user information within a specific machine based on email.
+- **DELETE** `/api/v1/machines/{machine_code}/users/{email}`: Delete a specific user from the machine based on email.
 
-### Sensors
+### Machine
 
-- **GET** `/api/v1/sensors/{sensor_id}`: Retrieve sensor information for a specific machine based on its sensor ID.
-- **POST** `/api/v1/sensors`: Add a new machine to the database identified by its sensor ID.
-- **PUT** `/api/v1/sensors/{sensor_id}`: Update all information related to a specific machine based on its sensor ID.
-- **DELETE** `/api/v1/sensors/{sensor_id}`: Delete a machine from the database based on its sensor ID.
+- **GET** `/api/v1/machines/{machine_code}/sensors`: Retrieve sensor information for a specific machine based on its sensor ID.
+- **POST** `/api/v1/machines`: Add a new machine to the database identified by its sensor ID.
+- **PUT** `/api/v1/machines/{machine_code}/sensors`: Update all information related to a specific machine based on its sensor ID.
+- **DELETE** `/api/v1/machines/{machine_code}/sensors`: Delete a machine from the database based on its sensor ID.
 
 ## Installation
 

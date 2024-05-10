@@ -19,6 +19,7 @@ install_dependencies() {
         $1 install python-dotenv
         $1 install django django-ninja-extra
         $1 install firebase-admin
+        $1 install pydantic[email]
     fi
 }
 

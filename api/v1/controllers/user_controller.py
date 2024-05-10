@@ -1,151 +1,146 @@
-from ninja_extra import ControllerBase, api_controller, route
-from api.v1.schemas import UserRequestSchema, UserResponseSchema, ErrorResponseSchema
-from api.v1.services import UserService
-from api.v1.exceptions import BadRequestException, NotFoundException, ServerErrorException
 from typing import List
+from ninja_extra import (
+    ControllerBase, api_controller, route)
+from api.v1.schemas import (
+    UserSchema, ErrorSchema)
+from api.v1.exceptions import (
+    BadRequestException, NotFoundException, 
+    ServerErrorException, ConflictException)
+from api.v1.services import UserService
 
 
-@api_controller("/users")
+@api_controller("/machines/{machine_code}/users")
 class UserController(ControllerBase):
     
-    @route.get("/{sensor_id}", 
+    @route.get("/", 
                summary="List Users",
                description="Retrieve a list of users for a given sensor ID.",
                response={
-                   200: List[UserResponseSchema],
-                   404: ErrorResponseSchema,
-                   500: ErrorResponseSchema,
+                   200: List[UserSchema],
+                   404: ErrorSchema,
+                   500: ErrorSchema,
                })
-    def list(self, sensor_id: str):
+    def list(self, machine_code: str):
         """
         Retrieve a list of users for a given sensor ID.
         """
         try:
-            response = UserService.list(sensor_id)
+            response = UserService.list(machine_code)
             return 200, response
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
-        except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+            return 404, ErrorSchema(
+               **e.__dict__)
+        except:
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
+            
 
-    @route.post("/{sensor_id}", 
+    @route.post("", 
                 summary="Create User",
                 description="Create a new user for a given sensor ID.",
                 response={
-                    201: UserResponseSchema,
-                    400: ErrorResponseSchema,
-                    500: ErrorResponseSchema
+                    201: UserSchema,
+                    400: ErrorSchema,
+                    404: ErrorSchema,
+                    500: ErrorSchema
                 })
-    def create(self, sensor_id: str, user_request: UserRequestSchema):
+    def create(self, machine_code: str, user_request: UserSchema):
         """
         Create a new user for a given sensor ID.
         """
         try:
-            response = UserService.create(sensor_id, user_request)
+            response = UserService.create(machine_code, user_request)
             return 201, response
         except BadRequestException as e:
-            return 400, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
-        except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+            return 400, ErrorSchema(
+               **e.__dict__)
+        except NotFoundException as e:
+            return 404, ErrorSchema(
+               **e.__dict__)
+        except ConflictException as e:
+            return 409, ErrorSchema(
+               **e.__dict__)
+        except:
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
+            
         
-    @route.get("/{sensor_id}/{email}", 
+    @route.get("/{email}", 
                summary="Retrieve User",
                description="Retrieve user details by email address for a given sensor ID.",
                response={
-                   200: UserResponseSchema,
-                   400: ErrorResponseSchema,
-                   404: ErrorResponseSchema,
-                   500: ErrorResponseSchema
+                   200: UserSchema,
+                   400: ErrorSchema,
+                   404: ErrorSchema,
+                   500: ErrorSchema
                })
-    def retrieve(self, sensor_id: str, email: str):
+    def retrieve(self, machine_code: str, email: str):
         """
         Retrieve user details by email address for a given sensor ID.
         """
         try: 
-            response = UserService.retrieve(sensor_id, email)
+            response = UserService.retrieve(machine_code, email)
             return 200, response
         except BadRequestException as e:
-            return 400, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 400, ErrorSchema(
+               **e.__dict__)
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
-        except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+            return 404, ErrorSchema(
+               **e.__dict__)
+        except:
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
+            
         
-    @route.put("/{sensor_id}/{email}", 
+    @route.put("/{email}", 
                summary="Update User",
                description="Update user details by email address for a given sensor ID.",
                response={
-                   200: UserResponseSchema,
-                   400: ErrorResponseSchema,
-                   404: ErrorResponseSchema,
-                   500: ErrorResponseSchema
+                   200: UserSchema,
+                   400: ErrorSchema,
+                   404: ErrorSchema,
+                   500: ErrorSchema
                })
-    def update(self, sensor_id: str, email: str, user_request: UserRequestSchema):
+    def update(self, machine_code: str, email: str, user_request: UserSchema):
         """
         Update user details by email address for a given sensor ID.
         """
         try: 
-            response = UserService.update(sensor_id, email, user_request)
+            response = UserService.update(
+                machine_code, email, user_request)
             return 200, response
         except BadRequestException as e:
-            return 400, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
+            return 400, ErrorSchema(
+               **e.__dict__)
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
-        except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+            return 404, ErrorSchema(
+               **e.__dict__)
+        except:
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
+            
         
-    @route.delete("/{sensor_id}/{email}", 
+    @route.delete("/{email}", 
                   summary="Delete User",
                   description="Delete user by email address for a given sensor ID.",
                   response={
                       204: dict,
-                      404: ErrorResponseSchema,
-                      500: ErrorResponseSchema
+                      404: ErrorSchema,
+                      500: ErrorSchema
                   })
-    def destroy(self, sensor_id: str, email: str):
+    def destroy(self, machine_code: str, email: str):
         """
         Delete user by email address for a given sensor ID.
         """
         try: 
-            response = UserService.destroy(sensor_id, email)
+            response = UserService.destroy(machine_code, email)
             return 204, {"detail": "User successfully deleted."}
+        except BadRequestException as e:
+            return 400, ErrorSchema(
+               **e.__dict__)
         except NotFoundException as e:
-            return 404, ErrorResponseSchema(
-                status=e.status,
-                detail=e.detail
-            )
-        except ServerErrorException as e:
-            return 500, ErrorResponseSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+            return 404, ErrorSchema(
+               **e.__dict__)
+        except:
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)

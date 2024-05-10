@@ -10,6 +10,8 @@ cryptography==42.0.5
 Django==4.2.11
 django-ninja==1.1.0
 django-ninja-extra==0.20.5
+dnspython==2.6.1
+email_validator==2.1.1
 firebase-admin==6.5.0
 flake8==7.0.0
 google-api-core==2.18.0

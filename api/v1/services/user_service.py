@@ -1,81 +1,93 @@
-from api.v1.schemas import UserRequestSchema, UserResponseSchema
-from api.v1.repositories import UserRepository
-from api.v1.exceptions import BadRequestException, NotFoundException, ServerErrorException
+from typing import List
+from api.v1.schemas import UserSchema
+from api.v1.repositories import (
+    UserRepository, MachineRepository)
+from api.v1.exceptions import (
+    BadRequestException, NotFoundException, 
+    ServerErrorException, ConflictException)
 
 
 class UserService:
     
     @staticmethod    
-    def list(sensor_id : str):
+    def list(machine_code : str):
+        
+        if not MachineRepository.is_machine_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
 
-        users=UserRepository.get_users(sensor_id)
-        if not users:
-            raise BadRequestException(
-                detail="Invalid request."
-            )
-        
-        return users
-    
+        return UserRepository.get_users(machine_code)
+     
     
     @staticmethod    
-    def create(sensor_id : str, user_request: UserRequestSchema):
+    def create(machine_code : str, user_request: UserSchema):
         
-        email=user_request.email
-        if UserRepository.is_user_exists(sensor_id, email):
-            raise BadRequestException(
-                detail="User already exists."
-            )
-        
-        if not UserRepository.create_user(sensor_id, user_request):
-            raise ServerErrorException()
-        
-        return UserResponseSchema(**user_request.dict())
-    
-    
-    @staticmethod    
-    def retrieve(sensor_id : str, email : str):
-        
-        if not UserRepository.is_user_exists(sensor_id, email):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
-                detail="User does not exist."
-            )
+                detail="Machine instance does not exists.")
+            
+        email : str = user_request.email
+        if UserRepository.is_user_exists(machine_code, email):
+            raise ConflictException(
+                detail="Duplicate user instance.")
         
-        user=UserRepository.get_user(sensor_id, email)
+        if not UserRepository.create_user(
+            machine_code, **user_request.dict()):
+            raise BadRequestException()
+        
+        return user_request
+    
+    
+    @staticmethod    
+    def retrieve(machine_code : str, email : str):
+        print(email)
+        
+        if not MachineRepository.is_machine_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+        
+        if not UserRepository.is_user_exists(machine_code, email):
+            raise NotFoundException(
+                detail="User does not exists.")
+        
+        user = UserRepository.get_user(machine_code, email)
         if not user:
-            raise BadRequestException(
-                detail="Invalid user email."
-            )
+            raise BadRequestException()
         
-        return UserResponseSchema(**user)
+        return UserSchema(**user)
 
     
-    
     @staticmethod    
-    def update(sensor_id : str, email: str, user_request : UserRequestSchema):
+    def update(machine_code : str, email: str, user_request : UserSchema):
         
-        if not UserRepository.get_user(sensor_id, email):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
-                detail="User not found."
-            )
+                detail = "Machine instance does not exists.")
+            
+        if not UserRepository.get_user(machine_code, email):
+            raise NotFoundException(
+                detail="User does not exists.")
         
-        user=UserRepository.update_user(sensor_id, email, user_request)
+        user = UserRepository.update_user(
+            machine_code, **user_request.dict())
         if not user:
-            raise BadRequestException(
-                detail="Invalid request."
-            )
+            raise BadRequestException()
         
-        return UserResponseSchema(**user_request.dict())
+        return user_request
     
     
     @staticmethod    
-    def destroy(sensor_id : str, email : str):
+    def destroy(machine_code : str, email : str):
         
-        if not UserRepository.get_user(sensor_id, email):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
-                detail="User not found."
-            )
+                detail = "Machine instance does not exists.")
+            
+        if not UserRepository.get_user(machine_code, email):
+            raise NotFoundException(
+                detail="User does not exists.")
         
-        if not UserRepository.delete_user(sensor_id, email):
-            raise ServerErrorException()
+        if not UserRepository.delete_user(machine_code, email):
+            raise BadRequestException()
         
         return True
