@@ -3,7 +3,10 @@ from dotenv import load_dotenv
 from django.urls import path
 from ninja import Redoc, Swagger
 from ninja_extra import NinjaExtraAPI
-from api.v1.controllers import UserController, SensorController
+from api.v1.controllers import (
+    UserController,
+    MachineController
+)
 
 
 load_dotenv()
@@ -23,7 +26,7 @@ api = NinjaExtraAPI(
 
 api.register_controllers(
     UserController,
-    SensorController
+    MachineController
 )
 
 urlpatterns = [
