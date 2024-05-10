@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import EmailStr
 from ninja_extra import (
     api_controller, ControllerBase, route)
@@ -11,18 +12,36 @@ from api.v2.services import UserService
 
 @api_controller("/machines/{machine_code}/users")
 class UserController(ControllerBase):
-    
-    @route.get("/")
-    def list(self, machine_code : str):
+    """
+    API Controller for managing users associated with a machine.
+    """
+
+    @route.get("/", 
+               summary="Retrieves a list of users associated with a machine.", 
+               description="Retrieves a list of users associated with a machine identified by the provided machine code.",
+               response={
+                   200: List[UserSchema],
+                   404: ErrorSchema,
+                   500: ErrorSchema
+               })
+    def list(self, machine_code: str):
+        """
+        Retrieves a list of users associated with a machine.
+
+        Args:
+            machine_code (str): The code identifying the machine.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
             response = UserService.list(machine_code)
-            return response
+            return 200, response
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
-                **ServerErrorException().__dict__)
-    
+            return 500, ErrorSchema(**ServerErrorException().__dict__)
+
     
     @route.get("/{email}")
     def retrieve(self, machine_code : str, email : EmailStr):
