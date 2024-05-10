@@ -43,17 +43,34 @@ class SensorController(ControllerBase):
             return 500, ErrorSchema(**e.__dict__)
             
     
-    @route.post("/")
+    @route.post("/", 
+                summary = "Create a new sensor instance.", 
+                description = "Creates a new sensor instance based on the path parameter inputted.", 
+                response = {
+                    201 : SensorSchema,
+                    404 : ErrorSchema, 
+                    409 : ErrorSchema,
+                    500 : ErrorSchema
+                })
     def create(self, machine_code : str):
+        """
+        Endpoint to create a new sensor instance based on the machine code.
+
+        Args:
+            machine_code (str): The ID of the machine.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
             response = SensorService.create(machine_code)
-            return response
+            return 201, response
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except ConflictException as e:
-            return ErrorSchema(**e.__dict__)
+            return 409, ErrorSchema(**e.__dict__)
         except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+            return 500, ErrorSchema(**e.__dict__)
     
     
     @route.put("/")
