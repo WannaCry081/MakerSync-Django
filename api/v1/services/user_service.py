@@ -1,4 +1,5 @@
 from pydantic import EmailStr
+from typing import List
 from api.v1.schemas import UserSchema
 from api.v1.repositories import (
     UserRepository, MachineRepository)
@@ -12,14 +13,13 @@ class UserService:
     @staticmethod    
     def list(machine_code : str):
         
-        if not MachineRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
 
         users = UserRepository.get_users(machine_code)
         if not users:
-            raise NotFoundException(
-                detail = "User does not exists.")
+            return List([])
         
         return users
     
@@ -27,11 +27,11 @@ class UserService:
     @staticmethod    
     def create(machine_code : str, user_request: UserSchema):
         
-        if not MachineRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
-                detail = "Machine instance does not exists.")
+                detail="Machine instance does not exists.")
             
-        email = user_request.email
+        email : EmailStr = user_request.email
         if UserRepository.is_user_exists(machine_code, email):
             raise ConflictException(
                 detail="Duplicate user instance.")
@@ -46,7 +46,7 @@ class UserService:
     @staticmethod    
     def retrieve(machine_code : str, email : EmailStr):
         
-        if not MachineRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
         
@@ -64,7 +64,7 @@ class UserService:
     @staticmethod    
     def update(machine_code : str, email: EmailStr, user_request : UserSchema):
         
-        if not MachineRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
             
@@ -83,7 +83,7 @@ class UserService:
     @staticmethod    
     def destroy(machine_code : str, email : EmailStr):
         
-        if not MachineRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
             
