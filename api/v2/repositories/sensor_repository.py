@@ -64,3 +64,16 @@ class SensorRepository:
         
         sensor.delete()
         return True
+    
+    
+    @staticmethod 
+    def is_sensor_exist(code : str):
+        
+        machine = Machine.objects.get(code = code)
+        sensor = Sensor.objects.filter(machine = machine).first()
+        
+        if not sensor:
+            return False
+        
+        return True
+        
