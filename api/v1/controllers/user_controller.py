@@ -106,7 +106,8 @@ class UserController(ControllerBase):
         Update user details by email address for a given sensor ID.
         """
         try: 
-            response = UserService.update(machine_code, email, user_request)
+            response = UserService.update(
+                machine_code, email, user_request)
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(
@@ -134,9 +135,12 @@ class UserController(ControllerBase):
         try: 
             response = UserService.destroy(machine_code, email)
             return 204, {"detail": "User successfully deleted."}
+        except BadRequestException as e:
+            return 400, ErrorSchema(
+               **e.__dict__)
         except NotFoundException as e:
             return 404, ErrorSchema(
                **e.__dict__)
-        except ServerErrorException as e:
+        except:
             return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
