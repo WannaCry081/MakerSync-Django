@@ -71,11 +71,9 @@ class MachineController(ControllerBase):
             return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
-        except Exception as e:
+        except:
             return 500, ErrorSchema(
-                status = 500,
-                detail = "Internal Server Error"
-            )
+                **ServerErrorException().__dict__)
             
     
     @route.put("/{machine_code}/sensors", 
