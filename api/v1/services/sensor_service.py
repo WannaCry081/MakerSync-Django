@@ -35,7 +35,7 @@ class SensorService:
             raise BadRequestException(
                 detail="Invalid machine. Please try again later.")
     
-        return SensorSchema(**sensor)
+        return SensorSchema(**sensor).dict()
     
     
     @staticmethod
