@@ -1,5 +1,6 @@
 from api.v1.schemas import UserSchema
-from api.v1.repositories import UserRepository
+from api.v1.repositories import (
+    UserRepository, MachineRepository)
 from api.v1.exceptions import (
     BadRequestException, NotFoundException, 
     ServerErrorException)
@@ -9,11 +10,15 @@ class UserService:
     
     @staticmethod    
     def list(machine_code : str):
+        
+        if not MachineRepository.is_sensor_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
 
         users = UserRepository.get_users(machine_code)
         if not users:
-            raise BadRequestException(
-                detail="Invalid request.")
+            raise NotFoundException(
+                detail = "User does not exists.")
         
         return users
     
