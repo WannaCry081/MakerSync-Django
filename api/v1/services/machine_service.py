@@ -1,6 +1,5 @@
 from api.v1.schemas import (
-    SensorSchema, 
-    CreateSensorSchema)
+    SensorSchema, CreateSensorSchema)
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
     NotFoundException, ConflictException)
@@ -13,7 +12,7 @@ class MachineService:
     def create(sensor_request : CreateSensorSchema):
         
         machine_code : str = sensor_request.code
-        if not MachineRepository.is_sensor_exists(machine_code):
+        if not MachineRepository.is_machine_exists(machine_code):
             raise ConflictException(
                 detail = "Duplicate machine instance.")
         
@@ -26,7 +25,7 @@ class MachineService:
     @staticmethod
     def retrieve(machine_code : str):
         
-        if MachineRepository.is_sensor_exists(machine_code):
+        if MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail="Machine instance does not exists.")
         
@@ -40,7 +39,7 @@ class MachineService:
     @staticmethod
     def update(machine_code : str, sensor_request : SensorSchema): 
         
-        if MachineRepository.is_sensor_exists(machine_code):
+        if MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail="Machine instance does not exists.")
             
@@ -56,7 +55,7 @@ class MachineService:
     @staticmethod
     def destroy(machine_code : str):
         
-        if MachineRepository.is_sensor_exists(machine_code):
+        if MachineRepository.is_machine_exists(machine_code):
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
         
