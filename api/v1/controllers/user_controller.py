@@ -1,4 +1,3 @@
-from pydantic import EmailStr
 from typing import List
 from ninja_extra import (
     ControllerBase, api_controller, route)
@@ -75,7 +74,7 @@ class UserController(ControllerBase):
                    404: ErrorSchema,
                    500: ErrorSchema
                })
-    def retrieve(self, machine_code: str, email: EmailStr):
+    def retrieve(self, machine_code: str, email: str):
         """
         Retrieve user details by email address for a given sensor ID.
         """
@@ -102,7 +101,7 @@ class UserController(ControllerBase):
                    404: ErrorSchema,
                    500: ErrorSchema
                })
-    def update(self, machine_code: str, email: EmailStr, user_request: UserSchema):
+    def update(self, machine_code: str, email: str, user_request: UserSchema):
         """
         Update user details by email address for a given sensor ID.
         """
@@ -129,7 +128,7 @@ class UserController(ControllerBase):
                       404: ErrorSchema,
                       500: ErrorSchema
                   })
-    def destroy(self, machine_code: str, email: EmailStr):
+    def destroy(self, machine_code: str, email: str):
         """
         Delete user by email address for a given sensor ID.
         """
