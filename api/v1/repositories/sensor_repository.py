@@ -1,4 +1,4 @@
-from api.v1.schemas import SensorRequestSchema
+from api.v1.schemas import SensorSchema
 from api.v1.utils import firebase_firestore
 
 
@@ -8,16 +8,9 @@ db = firebase_firestore()
 class SensorRepository:
     
     @staticmethod
-    def create_sensor(sensor_id : str):
-        doc=db.collection(sensor_id).document("sensors")
-        doc.set({
-            "is_start" : False,
-            "is_stop" : False,
-            "is_initialize" : False,
-            "counter" : 0,
-            "time" : 0,
-            "temperature" : 0
-        })
+    def create_sensor(code : str):
+        doc = db.collection(code).document("sensors")
+        doc.set(SensorSchema().dict())
         return True
     
     
