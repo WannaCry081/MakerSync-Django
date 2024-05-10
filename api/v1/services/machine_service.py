@@ -4,7 +4,7 @@ from api.v1.schemas import (
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
     NotFoundException, ConflictException)
-from api.v1.repositories import SensorRepository
+from api.v1.repositories import MachineRepository
 
 
 class MachineService:

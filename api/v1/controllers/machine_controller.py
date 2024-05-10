@@ -5,7 +5,7 @@ from api.v1.schemas import (
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
     NotFoundException)
-from api.v1.services.sensor_service import SensorService
+from api.v1.services import MachineService
 
 
 @api_controller("/machines")
