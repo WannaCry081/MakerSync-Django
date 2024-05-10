@@ -25,6 +25,9 @@ install_dependencies() {
 
 run_server() {
     echo "Running Server..."
+
+    python manage.py makemigrations v2
+    python manage.py migrate
     python manage.py runserver
     `$1`
 }
