@@ -6,7 +6,7 @@ from api.v1.schemas import (
     UserSchema, ErrorSchema)
 from api.v1.exceptions import (
     BadRequestException, NotFoundException, 
-    ServerErrorException)
+    ServerErrorException, ConflictException)
 from api.v1.services import UserService
 
 
@@ -54,9 +54,15 @@ class UserController(ControllerBase):
         except BadRequestException as e:
             return 400, ErrorSchema(
                **e.__dict__)
-        except ServerErrorException as e:
+        except NotFoundException as e:
+            return 404, ErrorSchema(
+               **e.__dict__)
+        except ConflictException as e:
+            return 409, ErrorSchema(
+               **e.__dict__)
+        except:
             return 500, ErrorSchema(
-                **e.__dict__)
+                **ServerErrorException().__dict__)
             
         
     @route.get("/{email}", 
