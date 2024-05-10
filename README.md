@@ -1,6 +1,10 @@
 # MakerSync [Django]
 
-MakerSync API facilitates the interaction between our Flutter mobile app and the circuitry involved in the process of converting PETG plastic into 3D printing filament. It offers two versions: v1, which integrates with Firebase Firestore using firebase_admin in Python, and v2, which utilizes SQLite.
+MakerSync API facilitates the interaction between our Flutter mobile app and the circuitry involved in the process of converting PETG plastic into 3D printing filament. It offers two versions: v1, which integrates with Firebase Firestore using firebase_admin in Python, and v2, which utilizes PosgreSQL.
+
+> [!NOTE]
+>
+> When running this project locally, it utilizes SQLite as the default database engine.
 
 ## Tools Used
 
@@ -37,7 +41,7 @@ MakerSync v1 utilizes Firebase as its primary database system, offering real-tim
 
 ### v2 Endpoints
 
-MakerSync v2 utilizes SQLite as its primary database system, offering unlimited user request and response capabilities.
+MakerSync v2 utilizes PostgreSQL as its primary database system, offering unlimited user request and response capabilities.
 
 #### Machine
 
