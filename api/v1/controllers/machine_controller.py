@@ -4,7 +4,7 @@ from api.v1.schemas import (
     ErrorSchema, CreateSensorSchema, SensorSchema)
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
-    NotFoundException)
+    NotFoundException, ConflictException)
 from api.v1.services import MachineService
 
 
@@ -20,6 +20,7 @@ class MachineController(ControllerBase):
                 response={
                     201 : SensorSchema, 
                     400 : ErrorSchema,
+                    409 : ErrorSchema,
                     500 : ErrorSchema
                 })
     def create(self, sensor_request : CreateSensorSchema):
@@ -33,12 +34,15 @@ class MachineController(ControllerBase):
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.create(sensor_request)
+            response = MachineService.create(sensor_request)
             return 201, response
         except BadRequestException as e:
             return 400, ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return 500, ErrorSchema(**e.__dict__)
+        except ConflictException as e:
+            return 409, ErrorSchema(**e.__dict__)
+        except:
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
             
     
     @route.get("/{machine_code}/sensors",
@@ -61,7 +65,7 @@ class MachineController(ControllerBase):
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.retrieve(machine_code)
+            response = MachineService.retrieve(machine_code)
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(**e.__dict__)
@@ -96,7 +100,7 @@ class MachineController(ControllerBase):
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = SensorService.update(machine_code, sensor_request)
+            response = MachineService.update(machine_code, sensor_request)
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(**e.__dict__)
@@ -128,7 +132,7 @@ class MachineController(ControllerBase):
             tuple: A tuple containing status code and response data.
         """
         try:
-            if SensorService.destroy(machine_code):
+            if MachineService.destroy(machine_code):
                 return 204, {"detail" : "Successfully delete collection"}
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
