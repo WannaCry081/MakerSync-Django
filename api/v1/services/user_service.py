@@ -3,7 +3,7 @@ from api.v1.repositories import (
     UserRepository, MachineRepository)
 from api.v1.exceptions import (
     BadRequestException, NotFoundException, 
-    ServerErrorException)
+    ServerErrorException, ConflictException)
 
 
 class UserService:
@@ -26,16 +26,20 @@ class UserService:
     @staticmethod    
     def create(machine_code : str, user_request: UserSchema):
         
+        if not MachineRepository.is_sensor_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+            
         email = user_request.email
         if UserRepository.is_user_exists(machine_code, email):
-            raise BadRequestException(
-                detail="User already exists."
-            )
+            raise ConflictException(
+                detail="Duplicate user instance.")
         
-        if not UserRepository.create_user(machine_code, user_request):
-            raise ServerErrorException()
+        if not UserRepository.create_user(
+            machine_code, **user_request.dict()):
+            raise BadRequestException()
         
-        return UserSchema(**user_request.dict())
+        return user_request
     
     
     @staticmethod    
