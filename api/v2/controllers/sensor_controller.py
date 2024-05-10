@@ -6,7 +6,7 @@ from api.v2.services import (
     SensorService)
 from api.v2.exceptions import (
     ConflictException, ServerErrorException,
-    NotFoundException)
+    NotFoundException, BadRequestException)
 from api.v2.schemas import ErrorSchema
 
 
@@ -44,10 +44,13 @@ class SensorController(ControllerBase):
             response = SensorService.update(
                 machine_code, sensor_request)
             return response
+        except BadRequestException as e:
+            return ErrorSchema(**e.__dict__)
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
     
     
     @route.delete("/")
