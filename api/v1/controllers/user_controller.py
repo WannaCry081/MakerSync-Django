@@ -87,9 +87,9 @@ class UserController(ControllerBase):
         except NotFoundException as e:
             return 404, ErrorSchema(
                **e.__dict__)
-        except ServerErrorException as e:
+        except:
             return 500, ErrorSchema(
-                **e.__dict__)
+                **ServerErrorException().__dict__)
             
         
     @route.put("/{email}", 
