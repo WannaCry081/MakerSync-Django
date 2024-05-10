@@ -1,3 +1,4 @@
+from pydantic import EmailStr
 from api.v1.schemas import UserSchema
 from api.v1.utils import firebase_firestore
 from typing import List 
@@ -15,13 +16,13 @@ class UserRepository:
    
    
     @staticmethod
-    def is_user_exists(code: str, email : str):
+    def is_user_exists(code: str, email : EmailStr):
         user_doc = db.collection(code).document(email).get()
         return user_doc.exists
 
 
     @staticmethod
-    def get_user(code: str, email: str):
+    def get_user(code: str, email: EmailStr):
         user = db.collection(code).document(email).get()
         if user.exists:
             return user.to_dict()
@@ -49,7 +50,7 @@ class UserRepository:
 
 
     @staticmethod 
-    def delete_user(code: str, email):
+    def delete_user(code: str, email : EmailStr):
         user = db.collection(code).document(email)
         user.delete()
         return True
