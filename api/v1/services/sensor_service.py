@@ -3,7 +3,7 @@ from api.v1.schemas import (
     CreateSensorSchema)
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
-    NotFoundException)
+    NotFoundException, ConflictException)
 from api.v1.repositories import SensorRepository
 
 
@@ -12,16 +12,15 @@ class SensorService:
     @staticmethod
     def create(sensor_request : CreateSensorSchema):
         
-        code : str = sensor_request.code
-        if not SensorRepository.is_sensor_exists(code):
-            raise BadRequestException(
-                detail="Sensors already exists."
-            )
+        machine_code : str = sensor_request.code
+        if not SensorRepository.is_sensor_exists(machine_code):
+            raise ConflictException(
+                detail="Sensors resource already exists.")
         
-        if not SensorRepository.create_sensor(code):
+        if not SensorRepository.create_sensor(machine_code):
             raise ServerErrorException()
         
-        return SensorSchema()
+        return SensorSchema().dict()
 
     
     @staticmethod
