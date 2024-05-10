@@ -31,6 +31,8 @@ class SensorController(ControllerBase):
             return response
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
+        except ConflictException as e:
+            return ErrorSchema(**e.__dict__)
         except ServerErrorException as e:
             return ErrorSchema(**e.__dict__)
     
