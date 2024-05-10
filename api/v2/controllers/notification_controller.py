@@ -4,7 +4,8 @@ from api.v2.schemas import (
     NotificationSchema, CreateNotificationSchema,
     ErrorSchema)
 from api.v2.exceptions import (
-    NotFoundException, ServerErrorException)
+    NotFoundException, ServerErrorException,
+    BadRequestException)
 from api.v2.services import NotificationService
 
 
@@ -18,8 +19,9 @@ class NotificationController(ControllerBase):
             return response
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
     
     
     @route.get("/{notification_id}")
@@ -30,8 +32,9 @@ class NotificationController(ControllerBase):
             return response
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+        except:
+            return ErrorSchema(
+                **ServerErrorException().__dict__)
 
     
     @route.post("/")
@@ -41,7 +44,10 @@ class NotificationController(ControllerBase):
             response = NotificationService.create(
                 machine_code, notification_request)
             return response
+        except BadRequestException as e:
+            return ErrorSchema(**e.__dict__)
         except NotFoundException as e:
             return ErrorSchema(**e.__dict__)
-        except ServerErrorException as e:
-            return ServerErrorException(**e.__dict__)
+        except:
+            return ServerErrorException(
+                **ServerErrorException().__dict__)
