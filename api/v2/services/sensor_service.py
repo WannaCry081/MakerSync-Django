@@ -53,7 +53,12 @@ class SensorService:
     def update(machine_code : str, sensor_request : SensorSchema):
         
         if not MachineRepository.is_machine_exist(machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+        
+        if not SensorRepository.is_sensor_exist(machine_code):
+            raise NotFoundException(
+                detail = "Sensor instance does not exists.")
         
         sensor = SensorRepository.update_sensor(
             machine_code, **sensor_request.dict())
