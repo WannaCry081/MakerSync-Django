@@ -1,9 +1,20 @@
-from pydantic import BaseModel, Field
+from uuid import UUID
+from pydantic import (
+    BaseModel, Field, validator)
 
 
 class CreateSensorSchema(BaseModel):
     code : str = Field(
         ..., title = "Sensor Code")
+    
+    
+    @validator("code")
+    def validate_code(cls, value):
+        try:
+            uuid.UUID(value)
+            return value
+        except ValueError:
+            raise ValueError("Code is not valid.")
     
 
 class SensorSchema(BaseModel):
