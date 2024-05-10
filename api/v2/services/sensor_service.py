@@ -73,7 +73,12 @@ class SensorService:
     def destroy(machine_code : str):
         
         if not MachineRepository.is_machine_exist(machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+        
+        if not SensorRepository.is_sensor_exist(machine_code):
+            raise NotFoundException(
+                detail = "Sensor instance does not exists.")
         
         if not SensorRepository.delete_sensor(machine_code):    
             raise ServerErrorException()
