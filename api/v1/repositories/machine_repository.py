@@ -17,7 +17,7 @@ class MachineRepository:
     @staticmethod
     def is_machine_exists(code : str):
         for collection in db.collections():
-            if code == str(collection):
+            if code == str(collection.id):
                 return True
     
         return False
