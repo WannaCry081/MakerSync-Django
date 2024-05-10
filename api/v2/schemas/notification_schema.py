@@ -31,7 +31,8 @@ class CreateNotificationSchema(BaseModel):
     
     
 class NotificationSchema(BaseModel):
-    
+    id : int = Field(
+        ..., title = "Notification ID")
     title : str = Field(
         ..., title = "Notification Title") 
     content : str = Field(
