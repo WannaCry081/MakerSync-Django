@@ -10,9 +10,12 @@ class UserRepository:
     
     @staticmethod
     def create_user(code: str, **kwargs):
-       doc = db.collection(code).document(user_request.email)
-       doc.set(kwargs)
-       return True  
+        if not ("email" in kwargs and "username" in kwargs):
+            return False
+        
+        doc = db.collection(code).document(kwargs["email"])
+        doc.set(kwargs)
+        return True  
    
    
     @staticmethod
