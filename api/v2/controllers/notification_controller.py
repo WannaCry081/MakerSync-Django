@@ -74,17 +74,35 @@ class NotificationController(ControllerBase):
                 **ServerErrorException().__dict__)
 
     
-    @route.post("/")
+    @route.post("/", 
+                summary = "Creates a new notification instance.",
+                description = "Creates a new notification instance based on the path parameter inputted.",
+                response = {
+                    201 : NotificationSchema,
+                    400 : ErrorSchema,
+                    404 : ErrorSchema,
+                    500 : ErrorSchema
+                })
     def create(self, machine_code : str, 
                notification_request : CreateNotificationSchema):
+        """
+        Endpoint to create a new notification instance based on the machine code.
+
+        Args:
+            machine_code (str): The ID of the machine.
+            notification_request (CreateNotificationSchema): The request data for creating a new notification instance.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
             response = NotificationService.create(
                 machine_code, notification_request)
-            return response
+            return 201, response
         except BadRequestException as e:
-            return ErrorSchema(**e.__dict__)
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ServerErrorException(
+            return 500, ServerErrorException(
                 **ServerErrorException().__dict__)
