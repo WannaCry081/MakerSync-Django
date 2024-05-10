@@ -1,5 +1,5 @@
 from api.v1.schemas import (
-    SensorSchema, SensorSchema, 
+    SensorSchema, 
     CreateSensorSchema)
 from api.v1.exceptions import (
     BadRequestException, ServerErrorException, 
@@ -43,16 +43,15 @@ class SensorService:
         
         if SensorRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
-                detail="Sensor not found."
-            )
+                detail="Machine does not exists.")
             
-        sensor=SensorRepository.update_sensor(machine_code, sensor_request)
+        sensor = SensorRepository.update_sensor(
+            machine_code, **sensor_request)
         if not sensor: 
             raise BadRequestException(
-                detail="Invalid Sensor ID"
-            )
+                detail="Invalid machine. Please try again later.")
        
-        return SensorSchema(**sensor_request.dict())
+        return sensor_request.dict()
             
     
     @staticmethod
@@ -60,8 +59,7 @@ class SensorService:
         
         if SensorRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
-                detail="Sensor not found."
-            )
+                detail = "Machine does not exists.")
         
         if not SensorRepository.delete_sensor(machine_code):
             raise ServerErrorException()
