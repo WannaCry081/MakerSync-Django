@@ -21,23 +21,25 @@ class SensorRepository:
     
     
     @staticmethod
-    def get_sensor(sensor_id : str):
-        sensor=db.collection(sensor_id).document("sensors").get()
+    def get_sensor(code : str):
+        sensor = db.collection(code).document("sensors").get()
+        
         if sensor.exists:
             return sensor.to_dict()
+        
         return None
     
     
     @staticmethod
-    def update_sensor(sensor_id : str, sensor_request : SensorRequestSchema):
-        sensor=db.collection(sensor_id).document("sensors")
-        sensor.update(sensor_request.dict())
+    def update_sensor(code : str, **kwargs):
+        sensor = db.collection(code).document("sensors")
+        sensor.update(kwargs)
         return True
     
     
     @staticmethod
-    def delete_sensor(sensor_id : str):
-        collection=db.collection(sensor_id)
+    def delete_sensor(code : str):
+        collection = db.collection(code)
         
         for document in collection.stream():
             document.reference.delete()
