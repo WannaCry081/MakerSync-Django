@@ -107,12 +107,28 @@ class SensorController(ControllerBase):
                 **ServerErrorException().__dict__)
     
     
-    @route.delete("/")
+    @route.delete("/", 
+                  summary = "Deletes the sensor instance.",
+                  description = "Deletes the sensor instance based on the path parameter inputted.", 
+                  response = {
+                      204 : dict, 
+                      404 : ErrorSchema,
+                      500 : ErrorSchema
+                  })
     def destroy(self, machine_code : str):
+        """
+        Endpoint to remove a sensor instance based on the machine code.
+
+        Args:
+            machine_code (str): The ID of the machine.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
             response = SensorService.destroy(machine_code)
-            return response
+            return 204, response
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except ServerErrorException as e:
-            return ErrorSchema(**e.__dict__)
+            return 500, ErrorSchema(**e.__dict__)
