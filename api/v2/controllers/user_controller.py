@@ -137,20 +137,37 @@ class UserController(ControllerBase):
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
         except:
-            return 500, ErrorSchema(**ServerErrorException().__dict__)
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
 
     
-    @route.delete("/{email}")
-    def destroy(self, machine_code : str, email : EmailStr):
-        
+    @route.delete("/{email}", 
+              summary="Deletes an existing user associated with a machine.", 
+              description="Deletes an existing user associated with a machine identified by the provided machine code and user email.",
+              response={
+                  204: dict,
+                  400: ErrorSchema,
+                  404: ErrorSchema,
+                  500: ErrorSchema
+              })
+    def destroy(self, machine_code: str, email: EmailStr):
+        """
+        Deletes an existing user associated with a machine.
+
+        Args:
+            machine_code (str): The code identifying the machine.
+            email (EmailStr): The email of the user to be deleted.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
-            response = UserService.destroy(
-                machine_code, email)
-            return response
+            response = UserService.destroy(machine_code, email)
+            return 204, response
         except BadRequestException as e:
-            return ErrorSchema(**e.__dict__)
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
