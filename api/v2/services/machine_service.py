@@ -1,7 +1,7 @@
 from api.v2.schemas import (
     MachineSchema, SensorSchema)
 from api.v2.exceptions import ( 
-    ConflictException, ServerErrorException)
+    ConflictException, BadRequestException)
 from api.v2.repositories import (
     MachineRepository)
 
@@ -13,9 +13,10 @@ class MachineService:
         
         code = machine_request.code 
         if MachineRepository.is_machine_exist(code):
-            raise ConflictException()
+            raise ConflictException(
+                detail = "Duplicate machine instance.")
         
         if not MachineRepository.create_machine(code):
-            raise ServerErrorException() 
+            raise BadRequestException() 
         
         return SensorSchema()
