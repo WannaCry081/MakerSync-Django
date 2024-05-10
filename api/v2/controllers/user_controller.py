@@ -40,21 +40,38 @@ class UserController(ControllerBase):
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
         except:
-            return 500, ErrorSchema(**ServerErrorException().__dict__)
+            return 500, ErrorSchema(
+                **ServerErrorException().__dict__)
 
     
-    @route.get("/{email}")
-    def retrieve(self, machine_code : str, email : EmailStr):
+    @route.get("/{email}",
+           summary="Retrieves a specific user associated with a machine.", 
+           description="Retrieves a specific user associated with a machine identified by the provided machine code and user email.",
+           response={
+               200: UserSchema,
+               404: ErrorSchema,
+               500: ErrorSchema
+           })
+    def retrieve(self, machine_code: str, email: EmailStr):
+        """
+        Retrieves a specific user associated with a machine.
+
+        Args:
+            machine_code (str): The code identifying the machine.
+            email (EmailStr): The email of the user to retrieve.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
-            response = UserService.retrieve(
-                machine_code, email)
-            return response
+            response = UserService.retrieve(machine_code, email)
+            return 200, response
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
-    
+
     
     @route.post("/")
     def create(self, machine_code : str, 
