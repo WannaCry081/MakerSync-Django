@@ -14,7 +14,8 @@ class UserService:
         
         if not MachineRepository.is_machine_exist(
             machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         users = UserRepository.get_users(machine_code)
         
@@ -32,11 +33,13 @@ class UserService:
         
         if not MachineRepository.is_machine_exist(
             machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         if not UserRepository.is_user_exist(
             machine_code, email):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "User instance does not exists.")
         
         user = UserRepository.get_user(
             machine_code, email)
@@ -49,11 +52,13 @@ class UserService:
         
         if not MachineRepository.is_machine_exist(
             machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         if UserRepository.is_user_exist(
             machine_code, user_request.email):
-            raise ConflictException()
+            raise ConflictException(
+                detail = "Duplicate user instance.")
 
         user = UserRepository.create_user(
             machine_code, **user_request.dict())
@@ -70,11 +75,13 @@ class UserService:
         
         if not MachineRepository.is_machine_exist(
             machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         if not UserRepository.is_user_exist(
             machine_code, email):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "User instance does not exists.")
         
         user = UserRepository.get_user(
             machine_code, email)
@@ -92,11 +99,13 @@ class UserService:
         
         if not MachineRepository.is_machine_exist(
             machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         if not UserRepository.is_user_exist(
             machine_code, email):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "User instance does not exists.")
         
         user = UserRepository.get_user(
             machine_code, email)
