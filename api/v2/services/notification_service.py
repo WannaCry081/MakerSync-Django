@@ -14,7 +14,8 @@ class NotificationService:
     def list(machine_code : str):
         
         if not MachineRepository.is_machine_exist(machine_code):
-            raise NotFoundException()
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
         
         notifications = NotificationRepository.get_notifications(
             machine_code)
