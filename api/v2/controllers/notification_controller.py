@@ -1,3 +1,4 @@
+from typing import List
 from ninja_extra import (
     api_controller, ControllerBase, route)
 from api.v2.schemas import (
@@ -11,16 +12,35 @@ from api.v2.services import NotificationService
 
 @api_controller("/machines/{machine_code}/notifications")
 class NotificationController(ControllerBase):
+    """
+    Controller for handling notifications.
+    """
     
-    @route.get("/")
+    @route.get("/",
+               summary = "Retrieves a list of notification instance.",
+               description = "Retrieves a list of notification instance based on the path parameter inputted.",
+               response = {
+                   200 : List[NotificationSchema],
+                   404 : ErrorSchema,
+                   500 : ErrorSchema
+               })
     def list(self, machine_code : str):
+        """
+        Endpoint to retrieve a list of notifications of a given machine.
+
+        Args:
+            machine_code (str): The ID of the machine.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try: 
             response = NotificationService.list(machine_code)
-            return response
+            return 200, response
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
     
     
