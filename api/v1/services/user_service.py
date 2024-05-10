@@ -17,11 +17,8 @@ class UserService:
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
 
-        users = UserRepository.get_users(machine_code)
-        if not users:
-            return List([])
-        
-        return users
+        return UserRepository.get_users(machine_code)
+     
     
     
     @staticmethod    
