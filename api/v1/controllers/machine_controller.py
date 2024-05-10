@@ -8,8 +8,8 @@ from api.v1.exceptions import (
 from api.v1.services.sensor_service import SensorService
 
 
-@api_controller("/sensors")
-class SensorController(ControllerBase):
+@api_controller("/machines")
+class MachineController(ControllerBase):
     """
     Controller handling operations related to sensors.
     """

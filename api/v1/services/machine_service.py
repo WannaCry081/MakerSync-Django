@@ -7,7 +7,7 @@ from api.v1.exceptions import (
 from api.v1.repositories import SensorRepository
 
 
-class SensorService:
+class MachineService:
     
     @staticmethod
     def create(sensor_request : CreateSensorSchema):

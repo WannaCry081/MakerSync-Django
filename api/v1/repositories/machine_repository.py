@@ -5,7 +5,7 @@ from api.v1.utils import firebase_firestore
 db = firebase_firestore()
 
 
-class SensorRepository:
+class MachineRepository:
     
     @staticmethod
     def create_sensor(code : str):
