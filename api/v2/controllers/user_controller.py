@@ -108,21 +108,37 @@ class UserController(ControllerBase):
                 **ServerErrorException().__dict__)
 
         
-    @route.put("/{email}")
-    def update(self, machine_code : str, 
-               email : EmailStr, user_request : UserSchema):
+    @route.put("/{email}", 
+           summary="Updates an existing user associated with a machine.", 
+           description="Updates an existing user associated with a machine identified by the provided machine code and user email.",
+           response={
+               200: UserSchema,
+               400: ErrorSchema,
+               404: ErrorSchema,
+               500: ErrorSchema
+           })
+    def update(self, machine_code: str, email: EmailStr, user_request: UserSchema):
+        """
+        Updates an existing user associated with a machine.
+
+        Args:
+        - machine_code (str): The code identifying the machine.
+        - email (EmailStr): The email of the user to be updated.
+        - user_request (UserSchema): The updated details of the user.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
-            response = UserService.update(
-                machine_code, email, user_request)
-            return response
+            response = UserService.update(machine_code, email, user_request)
+            return 200, response
         except BadRequestException as e:
-            return ErrorSchema(**e.__dict__)
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
-                **ServerErrorException().__dict__)
-        
+            return 500, ErrorSchema(**ServerErrorException().__dict__)
+
     
     @route.delete("/{email}")
     def destroy(self, machine_code : str, email : EmailStr):
