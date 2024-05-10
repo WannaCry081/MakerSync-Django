@@ -13,18 +13,21 @@ class UserRepository:
        doc.set(kwargs)
        return True  
    
+   
     @staticmethod
     def is_user_exists(code: str, email : str):
         user_doc = db.collection(code).document(email).get()
         return user_doc.exists
-        
+
+
     @staticmethod
     def get_user(code: str, email: str):
         user = db.collection(code).document(email).get()
         if user.exists:
             return user.to_dict()
         return None
-    
+
+
     @staticmethod
     def get_users(code: str):
         users = []
@@ -33,17 +36,20 @@ class UserRepository:
         users = [doc.to_dict() for doc in docs if doc.id != "sensors"]
         return users
 
-    
+
     @staticmethod
-    def update_user(code: str, email: str, user_request: UserSchema):
+    def update_user(code: str, **kwargs):
+        
+        if not ("email" in kwargs and "username" in kwargs):
+            return False
+        
         user = db.collection(code).document(email)
         user.update(user_request.dict())
         return True
-    
+
+
     @staticmethod 
     def delete_user(code: str, email):
         user = db.collection(code).document(email)
         user.delete()
         return True
-    
-    
