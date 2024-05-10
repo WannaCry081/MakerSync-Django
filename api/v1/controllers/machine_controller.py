@@ -41,7 +41,7 @@ class MachineController(ControllerBase):
             return 500, ErrorSchema(**e.__dict__)
             
     
-    @route.get("/{machine_code}",
+    @route.get("/{machine_code}/sensors",
                summary = "Retrieve a sensor",
                description = "Retrieve details of a sensor with the provided ID.", 
                response = {
@@ -74,7 +74,7 @@ class MachineController(ControllerBase):
             )
             
     
-    @route.put("/{machine_code}", 
+    @route.put("/{machine_code}/sensors", 
                summary = "Update a sensor",
                description = "Update details of a sensor with the provided ID.",
                response = {
@@ -109,7 +109,7 @@ class MachineController(ControllerBase):
             )
 
     
-    @route.delete("/{machine_code}", 
+    @route.delete("/{machine_code}/sensors", 
                   summary = "Delete a sensor",
                   description = "Delete a sensor with the provided ID.",
                   response={
