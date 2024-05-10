@@ -30,14 +30,11 @@ class UserController(ControllerBase):
             return 200, response
         except NotFoundException as e:
             return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
-        except ServerErrorException as e:
+               **e.__dict__)
+        except:
             return 500, ErrorSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+                **ServerErrorException().__dict__)
+            
 
     @route.post("", 
                 summary="Create User",
@@ -56,14 +53,11 @@ class UserController(ControllerBase):
             return 201, response
         except BadRequestException as e:
             return 400, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+               **e.__dict__)
         except ServerErrorException as e:
             return 500, ErrorSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+                **e.__dict__)
+            
         
     @route.get("/{email}", 
                summary="Retrieve User",
@@ -83,19 +77,14 @@ class UserController(ControllerBase):
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+               **e.__dict__)
         except NotFoundException as e:
             return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+               **e.__dict__)
         except ServerErrorException as e:
             return 500, ErrorSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+                **e.__dict__)
+            
         
     @route.put("/{email}", 
                summary="Update User",
@@ -115,19 +104,14 @@ class UserController(ControllerBase):
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+               **e.__dict__)
         except NotFoundException as e:
             return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+               **e.__dict__)
         except ServerErrorException as e:
             return 500, ErrorSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+                **e.__dict__)
+            
         
     @route.delete("/{email}", 
                   summary="Delete User",
@@ -146,11 +130,7 @@ class UserController(ControllerBase):
             return 204, {"detail": "User successfully deleted."}
         except NotFoundException as e:
             return 404, ErrorSchema(
-                status=e.status,
-                detail=e.detail
-            )
+               **e.__dict__)
         except ServerErrorException as e:
             return 500, ErrorSchema(
-                status=e.status,
-                detail="Internal Server Error"
-            )
+                **ServerErrorException().__dict__)
