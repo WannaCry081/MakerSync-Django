@@ -10,7 +10,7 @@ from api.v1.exceptions import (
 from api.v1.services import UserService
 
 
-@api_controller("/sensors/{machine_code}/users")
+@api_controller("/machines/{machine_code}/users")
 class UserController(ControllerBase):
     
     @route.get("/", 
