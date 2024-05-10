@@ -80,10 +80,10 @@ class MachineController(ControllerBase):
                summary = "Update a sensor",
                description = "Update details of a sensor with the provided ID.",
                response = {
-                200 : SensorSchema,
-                400 : ErrorSchema,
-                404 : ErrorSchema,
-                500 : ErrorSchema
+                    200 : SensorSchema,
+                    400 : ErrorSchema,
+                    404 : ErrorSchema,
+                    500 : ErrorSchema
                 })        
     def update(self, machine_code : str, 
                sensor_request : SensorSchema):
@@ -98,17 +98,16 @@ class MachineController(ControllerBase):
             tuple: A tuple containing status code and response data.
         """
         try:
-            response = MachineService.update(machine_code, sensor_request)
+            response = MachineService.update(
+                machine_code, sensor_request)
             return 200, response
         except BadRequestException as e:
             return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
-        except Exception as e:
+        except:
             return 500, ErrorSchema(
-                status = 500,
-                detail = "Internal Server Error"
-            )
+                **ServerErrorException().__dict__)
 
     
     @route.delete("/{machine_code}/sensors", 
