@@ -64,17 +64,20 @@ class UserService:
     @staticmethod    
     def update(machine_code : str, email: EmailStr, user_request : UserSchema):
         
+        if not MachineRepository.is_sensor_exists(machine_code):
+            raise NotFoundException(
+                detail = "Machine instance does not exists.")
+            
         if not UserRepository.get_user(machine_code, email):
             raise NotFoundException(
-                detail="User not found.")
+                detail="User does not exists.")
         
         user = UserRepository.update_user(
-            machine_code, email, user_request)
+            machine_code, **user_request.dict())
         if not user:
-            raise BadRequestException(
-                detail="Invalid request.")
+            raise BadRequestException()
         
-        return UserSchema(**user_request.dict())
+        return user_request
     
     
     @staticmethod    
