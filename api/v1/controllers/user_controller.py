@@ -42,6 +42,7 @@ class UserController(ControllerBase):
                 response={
                     201: UserSchema,
                     400: ErrorSchema,
+                    404: ErrorSchema,
                     500: ErrorSchema
                 })
     def create(self, machine_code: str, user_request: UserSchema):
