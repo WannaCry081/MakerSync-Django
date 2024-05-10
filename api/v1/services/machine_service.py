@@ -28,14 +28,14 @@ class MachineService:
         
         if MachineRepository.is_sensor_exists(machine_code):
             raise NotFoundException(
-                detail="Machine does not exists.")
+                detail="Machine instance does not exists.")
         
         sensor = MachineRepository.get_sensor(machine_code)
         if not sensor:
             raise BadRequestException(
                 detail="Invalid machine. Please try again later.")
     
-        return SensorSchema(**sensor).dict()
+        return SensorSchema(**sensor)
     
     
     @staticmethod
