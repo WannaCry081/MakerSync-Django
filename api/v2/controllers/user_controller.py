@@ -73,23 +73,40 @@ class UserController(ControllerBase):
                 **ServerErrorException().__dict__)
 
     
-    @route.post("/")
-    def create(self, machine_code : str, 
-               user_request : UserSchema):
+    @route.post("/", 
+            summary="Creates a new user associated with a machine.", 
+            description="Creates a new user associated with a machine identified by the provided machine code.",
+            response={
+                201: UserSchema,
+                400: ErrorSchema,
+                404: ErrorSchema,
+                409: ErrorSchema,
+                500: ErrorSchema
+            })
+    def create(self, machine_code: str, user_request: UserSchema):
+        """
+        Creates a new user associated with a machine.
+
+        Args:
+        - machine_code (str): The code identifying the machine.
+        - user_request (UserSchema): The details of the user to be created.
+
+        Returns:
+            tuple: A tuple containing status code and response data.
+        """
         try:
-            response = UserService.create(
-                machine_code, user_request)
-            return response
+            response = UserService.create(machine_code, user_request)
+            return 201, response
         except BadRequestException as e:
-            return ErrorSchema(**e.__dict__)
+            return 400, ErrorSchema(**e.__dict__)
         except NotFoundException as e:
-            return ErrorSchema(**e.__dict__)
+            return 404, ErrorSchema(**e.__dict__)
         except ConflictException as e:
-            return ErrorSchema(**e.__dict__)
+            return 409, ErrorSchema(**e.__dict__)
         except:
-            return ErrorSchema(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
-        
+
         
     @route.put("/{email}")
     def update(self, machine_code : str, 
