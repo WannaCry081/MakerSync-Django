@@ -16,7 +16,7 @@ class NotificationController(ControllerBase):
     Controller for handling notifications.
     """
     
-    @route.get("/",
+    @route.get("",
                summary = "Retrieves a list of notification instance.",
                description = "Retrieves a list of notification instance based on the path parameter inputted.",
                response = {
@@ -74,7 +74,7 @@ class NotificationController(ControllerBase):
                 **ServerErrorException().__dict__)
 
     
-    @route.post("/", 
+    @route.post("", 
                 summary = "Creates a new notification instance.",
                 description = "Creates a new notification instance based on the path parameter inputted.",
                 response = {
