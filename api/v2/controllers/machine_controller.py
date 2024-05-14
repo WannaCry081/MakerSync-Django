@@ -14,11 +14,11 @@ class MachineController(ControllerBase):
     Controller handling creating of machine instance.
     """
     
-    @route.post("/", 
+    @route.post("", 
                 summary = "Creates a new machine instance.",
                 description = "Creates a machine instance then returns a sensor instance.",
                 response = {
-                    201 : SensorSchema,
+                    201 : MachineSchema,
                     400 : ErrorSchema,
                     409 : ErrorSchema,
                     500 : ErrorSchema
