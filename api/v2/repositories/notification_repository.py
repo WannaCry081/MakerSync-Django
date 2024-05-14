@@ -26,13 +26,15 @@ class NotificationRepository:
     
     
     @staticmethod
-    def create_notification(code : str, 
-                            notification_request : CreateNotificationSchema):
+    def create_notification(code : str, **kwargs):
+        
+        if not ("title" in kwargs and "content" in kwargs):
+            return None
+        
         machine = Machine.objects.get(code = code)
         notification = Notification.objects.create(
-            **notification_request.dict(), machine = machine)
-        
-        if notification:
-            return True
-        
-        return False
+            title = kwargs["title"],
+            content = kwargs["content"],
+            machine = machine)
+
+        return notification

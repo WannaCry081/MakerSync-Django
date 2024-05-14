@@ -16,7 +16,7 @@ class SensorController(ControllerBase):
     Controller handling the Sensor instance.
     """
     
-    @route.get("/",
+    @route.get("",
                summary = "Retrieves a sensor instance.",
                description = "Retrieves a sensor instance based on the path parameter inputted",
                response = {
@@ -43,7 +43,7 @@ class SensorController(ControllerBase):
             return 500, ErrorSchema(**e.__dict__)
             
     
-    @route.post("/", 
+    @route.post("", 
                 summary = "Create a new sensor instance.", 
                 description = "Creates a new sensor instance based on the path parameter inputted.", 
                 response = {
@@ -73,7 +73,7 @@ class SensorController(ControllerBase):
             return 500, ErrorSchema(**e.__dict__)
     
     
-    @route.put("/", 
+    @route.put("", 
                summary = "Updates the sensor data.",
                description = "Updates the sensor data based on the request data and machine code.", 
                response = {
@@ -107,7 +107,7 @@ class SensorController(ControllerBase):
                 **ServerErrorException().__dict__)
     
     
-    @route.delete("/", 
+    @route.delete("", 
                   summary = "Deletes the sensor instance.",
                   description = "Deletes the sensor instance based on the path parameter inputted.", 
                   response = {

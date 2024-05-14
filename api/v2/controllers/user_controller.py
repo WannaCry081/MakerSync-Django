@@ -16,7 +16,7 @@ class UserController(ControllerBase):
     API Controller for managing users associated with a machine.
     """
 
-    @route.get("/", 
+    @route.get("", 
                summary="Retrieves a list of users associated with a machine.", 
                description="Retrieves a list of users associated with a machine identified by the provided machine code.",
                response={
@@ -73,7 +73,7 @@ class UserController(ControllerBase):
                 **ServerErrorException().__dict__)
 
     
-    @route.post("/", 
+    @route.post("", 
             summary="Creates a new user associated with a machine.", 
             description="Creates a new user associated with a machine identified by the provided machine code.",
             response={
