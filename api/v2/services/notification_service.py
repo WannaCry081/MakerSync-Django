@@ -51,8 +51,10 @@ class NotificationService:
             raise NotFoundException(
                 detail = "Machine instance does not exists.")
 
-        if not NotificationRepository.create_notification(
-            machine_code, notification_request): 
+        response = NotificationRepository.create_notification(
+            machine_code, **notification_request.dict()) 
+
+        if not response:
             raise BadRequestException()
         
-        return NotificationSchema(**notification_request.dict())
+        return NotificationSchema(**response.__dict__)
