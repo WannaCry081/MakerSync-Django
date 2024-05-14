@@ -104,5 +104,5 @@ class NotificationController(ControllerBase):
         except NotFoundException as e:
             return 404, ErrorSchema(**e.__dict__)
         except:
-            return 500, ServerErrorException(
+            return 500, ErrorSchema(
                 **ServerErrorException().__dict__)
