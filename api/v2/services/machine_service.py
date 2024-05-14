@@ -19,4 +19,4 @@ class MachineService:
         if not MachineRepository.create_machine(code):
             raise BadRequestException() 
         
-        return SensorSchema()
+        return machine_request
