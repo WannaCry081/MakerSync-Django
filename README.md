@@ -16,7 +16,7 @@ MakerSync API facilitates the interaction between our Flutter mobile app and the
 
 ## Endpoints
 
-You can access the MakerSync API endpoints through the provided documentation. Simply browse to [MakerSync v1 API Documentation](https://maker-sync-django.vercel.app/api/v1/docs) or [MakerSync v2 API Documentation](https://maker-sync-django.vercel.app/api/v2/docs) to get an overview of available endpoints and interact with the API.
+You can access the MakerSync API endpoints through the provided documentation. Simply browse to [MakerSync v1 API Documentation](http://127.0.0.1:8000/api/v1/docs) or [MakerSync v2 API Documentation](http://127.0.0.1:8000/api/v2/docs) in your local hosts to get an overview of available endpoints and interact with the API.
 
 
 ### v1 Endpoints
@@ -100,7 +100,7 @@ MakerSync v2 utilizes PostgreSQL as its primary database system, offering unlimi
    python manage.py runserver
    ```
 
-6. Access the API documentation at [MakerSync v1 API Documentation](https://maker-sync-django.vercel.app/api/v1/docs) or [MakerSync v2.0 API Documentation](https://maker-sync-django.vercel.app/api/v2/docs). 
+6. Access the API documentation locally at [MakerSync v1 API Documentation](http://127.0.0.1:8000/api/v1/docs) or [MakerSync v2.0 API Documentation](http://127.0.0.1:8000/api/v2/docs). 
 
 
 ### Additional Option
