@@ -24,4 +24,3 @@ if environment.lower() != "development":
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', value)
 
 application = get_wsgi_application()
-app = application
